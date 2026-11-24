@@ -57,6 +57,64 @@
   --color-gray-soft: rgba(201, 201, 209, 0.1);
 }
 
+/*
+  Light theme — same "elite tech house" bar, inverted.
+  ------------------------------------------------------
+  Dark stays the default and stays exactly as designed above; this block only
+  applies when <html data-theme="light"> is set (ThemeToggle.tsx, bootstrapped
+  before paint by the inline script in layout.tsx). Off-white/cream instead of
+  stark white, white "raised" cards that pop off the cream page, a deeper warm
+  taupe for recessed chrome (phone shells, table headers) — not a flat invert.
+
+  The lime accent (#d7ff4c) is far too light to read as text on a cream or
+  white field, so every ink-bearing accent/tone colour below is a deeper,
+  richer version of its dark-mode counterpart (checked against both --color-bg
+  and --color-bg-raised with the WCAG formula): ink 16.6–18.4:1, muted
+  6.4–7.1:1, accent text 5.1–5.6:1, accent-ink on a filled accent button
+  5.2:1, green/peach/gray ink 5.2–6.6:1 — all comfortably at or above AA
+  (4.5:1). --color-subtle (tertiary/label text only, e.g. chip counts) sits at
+  3.5–3.8:1, matching the dark theme's own --color-subtle-on-bg ratio
+  (~3.8:1) rather than regressing it.
+*/
+html[data-theme="light"] {
+  /* Surfaces */
+  --color-bg: #f6f3ec;
+  --color-bg-raised: #ffffff;
+  --color-bg-raised-2: #ece7da;
+  --color-line: rgba(21, 20, 15, 0.1);
+  --color-line-strong: rgba(21, 20, 15, 0.16);
+
+  /* Text */
+  --color-ink: #15140f;
+  --color-muted: #5b584e;
+  --color-subtle: #878273;
+
+  /* The one accent — darkened so it still reads as text/UI, not just a glow */
+  --color-accent: #5b6f0a;
+  --color-accent-ink: #f7f6ef;
+  --color-accent-soft: rgba(91, 111, 10, 0.12);
+  --color-accent-line: rgba(91, 111, 10, 0.35);
+
+  --color-brand: #5b6f0a;
+  --color-brand-soft: rgba(91, 111, 10, 0.12);
+  --color-brand-ink: #f7f6ef;
+  --color-brand-tint: rgba(91, 111, 10, 0.35);
+  --color-outline: rgba(21, 20, 15, 0.16);
+  --color-surface: #ffffff;
+  --color-surface-2: #ece7da;
+
+  /* Per-project accent reads, deepened the same way as the main accent */
+  --color-tone-blue: #2f6fe0;
+  --color-tone-green: #1e7a4c;
+  --color-tone-gray: #5f5d56;
+  --color-tone-peach: #a5591b;
+  --color-green-soft: rgba(30, 122, 76, 0.12);
+  --color-green-ink: #1e7a4c;
+  --color-peach-soft: rgba(165, 89, 27, 0.12);
+  --color-peach-ink: #a5591b;
+  --color-gray-soft: rgba(95, 93, 86, 0.1);
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -67,6 +125,16 @@
     @apply font-sans antialiased;
     background: var(--color-bg);
     color: var(--color-ink);
+  }
+
+  /* The toggle switches --color-* instantly; this is what makes every
+     surface, border and piece of text fade between the two themes instead
+     of snapping. The reduced-motion block below (already in this file)
+     collapses it to 0.01ms the same way it collapses every other
+     transition and animation on the site. */
+  *, *::before, *::after {
+    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease,
+      fill 0.25s ease, outline-color 0.25s ease;
   }
 
   h1, h2, h3, h4 {

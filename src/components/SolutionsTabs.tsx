@@ -71,9 +71,9 @@ function Visual({ kind }: { kind: Kind }) {
     return (
       <div className="flex h-[300px] w-[86%] flex-col overflow-hidden rounded-[14px] border border-line">
         <div className="flex h-[34px] items-center gap-1.5 border-b border-line px-3.5">
-          <span className="size-2 rounded-full bg-white/15" />
-          <span className="size-2 rounded-full bg-white/15" />
-          <span className="size-2 rounded-full bg-white/15" />
+          <span className="size-2 rounded-full bg-ink/15" />
+          <span className="size-2 rounded-full bg-ink/15" />
+          <span className="size-2 rounded-full bg-ink/15" />
         </div>
         <div className="flex flex-1 flex-col gap-3.5 p-5">
           <div className="h-3.5 w-[55%] rounded-md bg-ink/70" />

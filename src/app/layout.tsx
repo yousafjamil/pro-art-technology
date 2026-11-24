@@ -25,10 +25,18 @@ export const viewport: Viewport = {
   themeColor: "#09090b",
 };
 
+// Sets data-theme before the browser paints, from the visitor's last choice
+// (ThemeToggle.tsx writes it), so a returning light-theme visitor never sees
+// a flash of the dark default. Dark needs no attribute — it's the base
+// palette in globals.css — so a first-ever visit or a blocked localStorage
+// just renders dark immediately, with no script dependency either way.
+const THEME_BOOTSTRAP = `(function(){try{var t=localStorage.getItem("proart-theme");if(t==="light"){document.documentElement.setAttribute("data-theme","light");var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute("content","#f6f3ec");}}catch(e){}})();`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" suppressHydrationWarning>
       <body>
+        <script dangerouslySetInnerHTML={{ __html: THEME_BOOTSTRAP }} />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-[6px] focus:bg-accent focus:px-5 focus:py-3 focus:font-semibold focus:text-accent-ink"

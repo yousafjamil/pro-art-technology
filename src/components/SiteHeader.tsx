@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { navLinks } from "@/config/site";
 import { Logo } from "./Logo";
+import { ThemeToggle } from "./ThemeToggle";
 
 export function SiteHeader() {
   const pathname = usePathname();
@@ -34,27 +35,31 @@ export function SiteHeader() {
           </nav>
         </div>
 
-        <div className="hidden items-center gap-3 sm:flex">
-          <Link href="/contact" className="label px-3 py-2.5 text-muted transition-colors hover:text-ink">
-            Contact
-          </Link>
-          <Link
-            href="/contact"
-            className="label rounded-[6px] bg-accent px-5 py-2.5 text-accent-ink transition-colors hover:bg-ink"
-          >
-            Start a project
-          </Link>
-        </div>
+        <div className="flex items-center gap-2 sm:gap-3">
+          <ThemeToggle />
 
-        <button
-          type="button"
-          aria-expanded={open}
-          aria-controls="mobile-menu"
-          onClick={() => setOpen((v) => !v)}
-          className="label min-h-11 rounded-[6px] border border-line-strong px-5 text-ink lg:hidden"
-        >
-          {open ? "Close" : "Menu"}
-        </button>
+          <div className="hidden items-center gap-3 sm:flex">
+            <Link href="/contact" className="label px-3 py-2.5 text-muted transition-colors hover:text-ink">
+              Contact
+            </Link>
+            <Link
+              href="/contact"
+              className="label rounded-[6px] bg-accent px-5 py-2.5 text-accent-ink transition-colors hover:bg-ink"
+            >
+              Start a project
+            </Link>
+          </div>
+
+          <button
+            type="button"
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            onClick={() => setOpen((v) => !v)}
+            className="label min-h-11 rounded-[6px] border border-line-strong px-5 text-ink lg:hidden"
+          >
+            {open ? "Close" : "Menu"}
+          </button>
+        </div>
       </div>
 
       {open && (

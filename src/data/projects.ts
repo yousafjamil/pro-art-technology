@@ -239,12 +239,15 @@ export function coverImage(project: Project) {
   return site ? websiteShot(site.url) : undefined;
 }
 
-// Dark theme: each tone is a quiet per-project accent (a hairline, a glow, an
-// initial's color) rather than a pastel block. "blue" keeps using the site's
-// single accent lime so featured/flagship work still reads as the brightest.
+// Each tone is a quiet per-project accent (a hairline, a glow, an initial's
+// color) rather than a pastel block. "blue" keeps using the site's single
+// accent lime so featured/flagship work still reads as the brightest. Every
+// value here is a CSS custom property, so it repaints for the light theme
+// too (see the html[data-theme="light"] block in globals.css) without any
+// change needed on this page.
 export const tones = {
   blue: { bg: "bg-accent-soft", ink: "text-accent", fill: "bg-accent", line: "border-accent-line" },
   green: { bg: "bg-green-soft", ink: "text-green-ink", fill: "bg-green-ink", line: "border-[color:var(--color-green-ink)]/35" },
-  gray: { bg: "bg-gray-soft", ink: "text-tone-gray", fill: "bg-tone-gray", line: "border-white/20" },
+  gray: { bg: "bg-gray-soft", ink: "text-tone-gray", fill: "bg-tone-gray", line: "border-[color:var(--color-tone-gray)]/35" },
   peach: { bg: "bg-peach-soft", ink: "text-peach-ink", fill: "bg-peach-ink", line: "border-[color:var(--color-peach-ink)]/35" },
 } as const;

@@ -31,9 +31,9 @@ function BrowserFrame({ children, large }: { children: React.ReactNode; large?: 
       }`}
     >
       <div className="flex h-7 shrink-0 items-center gap-1.5 border-b border-line px-3">
-        <span className="size-2 rounded-full bg-white/15" />
-        <span className="size-2 rounded-full bg-white/15" />
-        <span className="size-2 rounded-full bg-white/15" />
+        <span className="size-2 rounded-full bg-ink/15" />
+        <span className="size-2 rounded-full bg-ink/15" />
+        <span className="size-2 rounded-full bg-ink/15" />
       </div>
       <div className="relative flex-1 overflow-hidden">{children}</div>
     </div>
