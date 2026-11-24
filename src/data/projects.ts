@@ -73,15 +73,27 @@ export const projects: Project[] = [
   },
   {
     slug: "lms-solutions",
-    name: "LMS Solutions",
+    name: "LMS Logistics Solutions",
     category: "Web Platform",
-    industry: "Education",
-    summary: "A learning management system for managing courses and training.",
+    industry: "Logistics",
+    summary: "A corporate platform presenting LMS's logistics services.",
     description:
-      "LMS Solutions is an e-learning platform (Learning Management System) that helps organisations create, manage and deliver courses and training.",
+      "A corporate web platform presenting LMS's logistics services — multi-client warehousing, dedicated warehousing, e-commerce fulfillment, and value-added services.",
     links: [{ kind: "website", url: "https://lms-solutions.com/" }],
     featured: true,
     tone: "peach",
+  },
+  {
+    slug: "uno-luxury",
+    name: "Uno Luxury",
+    category: "Website",
+    industry: "E-commerce / Luxury",
+    summary: "A direct-to-consumer luxury marketplace with 100,000+ products.",
+    description:
+      "Direct-to-consumer luxury marketplace — 100,000+ premium items at factory-direct pricing, with secure checkout and verified delivery across the United States.",
+    links: [],
+    featured: true,
+    tone: "gray",
   },
   {
     slug: "binops-pharma",
@@ -107,13 +119,14 @@ export const projects: Project[] = [
   },
   {
     slug: "quick-swapper",
-    name: "Quick Swapper",
+    name: "Quick Swappers",
     category: "Mobile App",
-    industry: "Utilities",
-    summary: "Swap and transfer files between devices quickly and easily.",
+    industry: "Marketplace",
+    summary: "A peer-to-peer swap marketplace for cars, phones, furniture and more.",
     description:
-      "Quick Swapper is a mobile app for quickly swapping and transferring files between devices with ease.",
+      "A peer-to-peer swap marketplace where users exchange items across categories like vehicles, mobiles, furniture, and home goods.",
     links: [{ kind: "play-store", url: "https://play.google.com/store/apps/details?id=com.noman.quickSwapper" }],
+    featured: true,
     tone: "green",
   },
   {
