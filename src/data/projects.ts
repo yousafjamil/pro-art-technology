@@ -178,6 +178,38 @@ export const projects: Project[] = [
     links: [{ kind: "website", url: "https://sadadad.com/en" }],
     tone: "peach",
   },
+  {
+    slug: "luckie",
+    name: "LUCKIE",
+    category: "Mobile App",
+    industry: "Community",
+    summary: "A community app for expatriates and locals, with news, jobs, challenges and AI.",
+    description:
+      "LUCKIE is a community mobile app for expatriates and local community members, starting in Saudi Arabia. Five areas: Home (news, posts, jobs and a shared map), Challenges (quizzes and a leaderboard), AI (chatbot and photo/video tools), Inbox (chat and invitations) and Profile.",
+    links: [{ kind: "website", url: "https://luckieapp.com/" }],
+    featured: true,
+    tone: "blue",
+  },
+  {
+    slug: "kingdom-of-projects",
+    name: "Kingdom of Projects",
+    category: "Website",
+    industry: "Business",
+    summary: "Business website designed and developed by ProArt Technology.",
+    links: [{ kind: "website", url: "https://kingdomofprojects.com/" }],
+    tone: "gray",
+  },
+  {
+    slug: "zoom-zamani",
+    name: "Zoom Zamani Studio",
+    category: "Website",
+    industry: "Photography",
+    summary: "A photography studio in Riyadh with over 50 years in business.",
+    description:
+      "A business website for Zoom Zamani Studio, a Riyadh photography studio — photo printing and restoration, commercial and product photography, event photography, and an art workshop for frames and photo albums.",
+    links: [{ kind: "website", url: "https://zoomzamani.com/" }],
+    tone: "green",
+  },
 ];
 
 export const categories: ProjectCategory[] = ["Mobile App", "Web Platform", "Website", "Software"];
@@ -207,9 +239,12 @@ export function coverImage(project: Project) {
   return site ? websiteShot(site.url) : undefined;
 }
 
+// Dark theme: each tone is a quiet per-project accent (a hairline, a glow, an
+// initial's color) rather than a pastel block. "blue" keeps using the site's
+// single accent lime so featured/flagship work still reads as the brightest.
 export const tones = {
-  blue: { bg: "bg-brand-soft", ink: "text-brand", fill: "bg-brand" },
-  green: { bg: "bg-green-soft", ink: "text-green-ink", fill: "bg-green-ink" },
-  gray: { bg: "bg-gray-soft", ink: "text-ink", fill: "bg-ink" },
-  peach: { bg: "bg-peach-soft", ink: "text-peach-ink", fill: "bg-peach-ink" },
+  blue: { bg: "bg-accent-soft", ink: "text-accent", fill: "bg-accent", line: "border-accent-line" },
+  green: { bg: "bg-green-soft", ink: "text-green-ink", fill: "bg-green-ink", line: "border-[color:var(--color-green-ink)]/35" },
+  gray: { bg: "bg-gray-soft", ink: "text-tone-gray", fill: "bg-tone-gray", line: "border-white/20" },
+  peach: { bg: "bg-peach-soft", ink: "text-peach-ink", fill: "bg-peach-ink", line: "border-[color:var(--color-peach-ink)]/35" },
 } as const;

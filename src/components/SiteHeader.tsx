@@ -13,19 +13,19 @@ export function SiteHeader() {
   const isActive = (href: string) => !href.startsWith("/#") && pathname.startsWith(href);
 
   return (
-    <header className="sticky top-0 z-30 border-b border-line bg-white/95 backdrop-blur">
-      <div className="mx-auto flex max-w-[1280px] items-center justify-between gap-4 px-5 py-3 sm:px-7">
-        <div className="flex items-center gap-9">
+    <header className="sticky top-0 z-30 border-b border-line bg-bg/85 backdrop-blur-md">
+      <div className="mx-auto flex max-w-[1280px] items-center justify-between gap-4 px-5 py-3.5 sm:px-7">
+        <div className="flex items-center gap-10">
           <Logo />
-          <nav aria-label="Main" className="hidden gap-1 text-[15px] font-medium lg:flex">
+          <nav aria-label="Main" className="hidden gap-1 label text-muted lg:flex">
             {navLinks.map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
                 className={
                   isActive(l.href)
-                    ? "rounded-full bg-brand-soft px-3.5 py-2.5 font-semibold text-brand-ink"
-                    : "rounded-full px-3.5 py-2.5 text-muted hover:bg-surface hover:text-ink"
+                    ? "rounded-[6px] px-3.5 py-2.5 text-ink"
+                    : "rounded-[6px] px-3.5 py-2.5 text-muted transition-colors hover:text-ink"
                 }
               >
                 {l.label}
@@ -34,11 +34,14 @@ export function SiteHeader() {
           </nav>
         </div>
 
-        <div className="hidden items-center gap-2 sm:flex">
-          <Link href="/contact" className="rounded-full px-5 py-2.5 text-[15px] font-semibold text-brand hover:bg-surface">
-            Contact us
+        <div className="hidden items-center gap-3 sm:flex">
+          <Link href="/contact" className="label px-3 py-2.5 text-muted transition-colors hover:text-ink">
+            Contact
           </Link>
-          <Link href="/contact" className="rounded-full bg-brand px-5 py-2.5 text-[15px] font-semibold text-white hover:bg-brand-ink hover:text-white">
+          <Link
+            href="/contact"
+            className="label rounded-[6px] bg-accent px-5 py-2.5 text-accent-ink transition-colors hover:bg-ink"
+          >
             Start a project
           </Link>
         </div>
@@ -48,21 +51,21 @@ export function SiteHeader() {
           aria-expanded={open}
           aria-controls="mobile-menu"
           onClick={() => setOpen((v) => !v)}
-          className="min-h-11 rounded-full border border-outline px-5 text-[15px] font-semibold lg:hidden"
+          className="label min-h-11 rounded-[6px] border border-line-strong px-5 text-ink lg:hidden"
         >
           {open ? "Close" : "Menu"}
         </button>
       </div>
 
       {open && (
-        <nav id="mobile-menu" aria-label="Mobile" className="border-t border-line bg-white px-5 pb-6 pt-3 lg:hidden">
+        <nav id="mobile-menu" aria-label="Mobile" className="border-t border-line bg-bg px-5 pb-6 pt-3 lg:hidden">
           <ul className="flex flex-col">
             {navLinks.map((l) => (
               <li key={l.href}>
                 <Link
                   href={l.href}
                   onClick={() => setOpen(false)}
-                  className="block border-b border-line py-4 text-[17px] font-medium"
+                  className="block border-b border-line py-4 font-display text-[17px] font-medium text-ink"
                 >
                   {l.label}
                 </Link>
@@ -72,7 +75,7 @@ export function SiteHeader() {
           <Link
             href="/contact"
             onClick={() => setOpen(false)}
-            className="mt-5 block rounded-full bg-brand py-3.5 text-center font-semibold text-white hover:text-white"
+            className="label mt-5 block rounded-[6px] bg-accent py-3.5 text-center text-accent-ink"
           >
             Start a project
           </Link>

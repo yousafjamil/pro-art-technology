@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { coverImage, tones, type Project } from "@/data/projects";
+import { tones, type Project } from "@/data/projects";
 
 // An <img> that reports failure even if it failed before the page became interactive.
 function SafeImg({ onFail, ...props }: React.ImgHTMLAttributes<HTMLImageElement> & { onFail: () => void }) {
@@ -26,14 +26,14 @@ function initials(name: string) {
 function BrowserFrame({ children, large }: { children: React.ReactNode; large?: boolean }) {
   return (
     <div
-      className={`flex w-[92%] flex-col overflow-hidden rounded-t-2xl bg-white shadow-[0_1px_3px_rgba(60,64,67,0.15)] ${
+      className={`flex w-[92%] flex-col overflow-hidden rounded-t-xl border border-line bg-bg-raised shadow-[0_30px_80px_-30px_rgba(0,0,0,0.6)] ${
         large ? "h-[min(520px,52vw)] min-h-[260px] max-w-[980px]" : "h-[190px]"
       }`}
     >
       <div className="flex h-7 shrink-0 items-center gap-1.5 border-b border-line px-3">
-        <span className="size-2 rounded-full bg-[#e3e3e3]" />
-        <span className="size-2 rounded-full bg-[#e3e3e3]" />
-        <span className="size-2 rounded-full bg-[#e3e3e3]" />
+        <span className="size-2 rounded-full bg-white/15" />
+        <span className="size-2 rounded-full bg-white/15" />
+        <span className="size-2 rounded-full bg-white/15" />
       </div>
       <div className="relative flex-1 overflow-hidden">{children}</div>
     </div>
@@ -49,51 +49,62 @@ function PhoneFrame({ children, large, short }: { children: React.ReactNode; lar
       ? "h-[160px] w-[100px]"
       : "h-[192px] w-[100px]";
   return (
-    <div className={`${size} shrink-0 rounded-t-[26px] bg-ink px-1.5 pt-1.5 ${large ? "rounded-t-[38px] px-2 pt-2" : ""}`}>
-      <div className={`h-full overflow-hidden rounded-t-[20px] bg-white ${large ? "rounded-t-[30px]" : ""}`}>{children}</div>
+    <div
+      className={`${size} shrink-0 rounded-t-[26px] border border-line-strong bg-bg-raised-2 p-1.5 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.6)] ${large ? "rounded-t-[38px] p-2" : ""}`}
+    >
+      <div className={`h-full overflow-hidden rounded-t-[20px] bg-bg-raised ${large ? "rounded-t-[30px]" : ""}`}>{children}</div>
     </div>
   );
 }
 
+// Designed fallback for a project with no real screenshot yet: a quiet
+// typographic mark over a faint engineering grid, not a loading spinner that
+// never resolves. Used instead of any live third-party screenshot service —
+// those return a "generating preview" placeholder that can sit broken for a
+// long time, which is not acceptable on a client-facing portfolio.
 function DrawnApp({ project, large }: { project: Project; large?: boolean }) {
   const tone = tones[project.tone ?? "blue"];
   return (
     <div className="flex items-end gap-3 sm:gap-5">
       <PhoneFrame large={large}>
-        <div className={`flex h-full flex-col ${large ? "gap-3 p-4" : "gap-1.5 p-2.5"}`}>
-          <div className={`flex items-center justify-center rounded-xl ${tone.bg} ${large ? "h-28" : "h-12"}`}>
-            <span className={`font-bold ${tone.ink} ${large ? "text-4xl" : "text-lg"}`}>{initials(project.name)}</span>
+        <div className={`grid-field flex h-full flex-col justify-between ${large ? "gap-3 p-4" : "gap-1.5 p-2.5"}`}>
+          <div className={`flex items-center justify-center rounded-md border ${tone.line} ${tone.bg} ${large ? "h-28" : "h-12"}`}>
+            <span className={`font-display font-semibold ${tone.ink} ${large ? "text-4xl" : "text-lg"}`}>{initials(project.name)}</span>
           </div>
-          <div className={`truncate font-semibold ${large ? "text-[15px]" : "text-[9px]"}`}>{project.name}</div>
-          <div className={`rounded-lg bg-surface ${large ? "h-12" : "h-6"}`} />
-          <div className={`rounded-lg bg-surface ${large ? "h-12" : "h-6"}`} />
-          {large && <div className="h-12 rounded-lg bg-surface" />}
+          <div className="flex flex-col gap-1.5">
+            <div className={`truncate font-display font-medium text-ink ${large ? "text-[15px]" : "text-[9px]"}`}>{project.name}</div>
+            <div className={`rounded border border-line bg-bg-raised-2 ${large ? "h-12" : "h-6"}`} />
+            {large && <div className="h-12 rounded border border-line bg-bg-raised-2" />}
+          </div>
         </div>
       </PhoneFrame>
       <PhoneFrame large={large} short>
-        <div className={`flex h-full flex-col ${large ? "gap-3 p-4" : "gap-1.5 p-2.5"}`}>
-          <div className={`rounded bg-ink ${large ? "h-2.5 w-3/5" : "h-1.5 w-3/5"}`} />
-          <div className={`rounded-xl bg-surface ${large ? "h-36" : "h-14"}`} />
-          <div className={`mt-auto rounded-full ${tone.fill} ${large ? "h-10" : "h-5"}`} />
+        <div className={`grid-field flex h-full flex-col ${large ? "gap-3 p-4" : "gap-1.5 p-2.5"}`}>
+          <div className={`rounded bg-ink/70 ${large ? "h-2.5 w-3/5" : "h-1.5 w-3/5"}`} />
+          <div className={`rounded border border-line bg-bg-raised-2 ${large ? "h-36" : "h-14"}`} />
+          <div className={`mt-auto rounded-[6px] ${tone.fill} ${large ? "h-10" : "h-5"}`} />
         </div>
       </PhoneFrame>
     </div>
   );
 }
 
-function DrawnSite({ project }: { project: Project }) {
+function DrawnSite({ project, large }: { project: Project; large?: boolean }) {
   const tone = tones[project.tone ?? "blue"];
   return (
-    <div className="flex h-full flex-col gap-2.5 p-4">
-      <div className="h-2.5 w-2/5 rounded bg-ink" />
-      <div className={`flex flex-1 items-center justify-center rounded-xl ${tone.bg}`}>
-        <span className={`px-3 text-center text-lg font-semibold ${tone.ink}`}>{project.name}</span>
-      </div>
-      <div className="grid h-1/4 grid-cols-3 gap-2">
-        <span className="rounded-lg bg-surface" />
-        <span className="rounded-lg bg-surface" />
-        <span className="rounded-lg bg-surface" />
-      </div>
+    <div className="grid-field relative flex h-full flex-col items-center justify-center gap-5 overflow-hidden p-6">
+      <span
+        aria-hidden="true"
+        className={`absolute inset-x-10 top-1/2 h-px -translate-y-1/2 opacity-50 ${tone.ink}`}
+        style={{ background: "linear-gradient(to right, transparent, currentColor, transparent)" }}
+      />
+      <span className={`label rounded-full border ${tone.line} px-3 py-1 ${tone.ink}`}>{project.category}</span>
+      <span
+        className={`font-display font-semibold tracking-tight text-ink/90 ${large ? "text-[clamp(32px,4vw,56px)]" : "text-2xl"}`}
+      >
+        {initials(project.name)}
+      </span>
+      <span className={`max-w-[80%] text-center text-muted ${large ? "text-base" : "text-xs"}`}>{project.name}</span>
     </div>
   );
 }
@@ -102,9 +113,10 @@ export function ProjectVisual({ project, large = false }: { project: Project; la
   const [failed, setFailed] = useState(false);
   const fail = useRef(() => setFailed(true)).current;
   const isApp = project.category === "Mobile App";
-  const cover = coverImage(project);
 
-  // Mobile app with real screenshots → show them in phone frames.
+  // Only ever show a screenshot when a real one has been added by hand to
+  // public/projects/<slug>/ — no live/auto screenshot service, so there is
+  // never a "generating preview" state stuck on screen.
   if (isApp && project.images?.length && !failed) {
     return (
       <div className="flex items-end gap-3 sm:gap-5">
@@ -119,19 +131,23 @@ export function ProjectVisual({ project, large = false }: { project: Project; la
 
   if (isApp) return <DrawnApp project={project} large={large} />;
 
-  return (
-    <BrowserFrame large={large}>
-      {cover && !failed ? (
+  if (project.images?.length && !failed) {
+    return (
+      <BrowserFrame large={large}>
         <SafeImg
-          src={cover}
+          src={project.images[0]}
           alt={`${project.name} website`}
           loading="lazy"
           className="size-full object-cover object-top"
           onFail={fail}
         />
-      ) : (
-        <DrawnSite project={project} />
-      )}
+      </BrowserFrame>
+    );
+  }
+
+  return (
+    <BrowserFrame large={large}>
+      <DrawnSite project={project} large={large} />
     </BrowserFrame>
   );
 }

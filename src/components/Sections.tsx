@@ -1,12 +1,24 @@
 import { site } from "@/config/site";
+import { Reveal } from "./motion/Reveal";
 import { ContactForm } from "./ContactForm";
 
-export function SectionHeading({ title, intro, center = true }: { title: string; intro?: string; center?: boolean }) {
+export function SectionHeading({
+  title,
+  intro,
+  kicker,
+  center = true,
+}: {
+  title: string;
+  intro?: string;
+  kicker?: string;
+  center?: boolean;
+}) {
   return (
-    <div className={center ? "mx-auto max-w-[820px] text-center" : "max-w-[640px]"}>
-      <h2 className="text-[clamp(34px,4.4vw,56px)] font-medium leading-[1.1] tracking-[-0.03em]">{title}</h2>
-      {intro && <p className={`mt-4 text-[19px] text-muted ${center ? "mx-auto max-w-[640px]" : ""}`}>{intro}</p>}
-    </div>
+    <Reveal className={center ? "mx-auto max-w-[820px] text-center" : "max-w-[640px]"}>
+      {kicker && <p className="label mb-4 text-accent">{kicker}</p>}
+      <h2 className="text-balance font-display text-[clamp(32px,4.2vw,54px)] font-medium leading-[1.1] tracking-[-0.02em]">{title}</h2>
+      {intro && <p className={`mt-4 text-[18px] text-muted ${center ? "mx-auto max-w-[640px]" : ""}`}>{intro}</p>}
+    </Reveal>
   );
 }
 
@@ -36,20 +48,20 @@ const faqs = [
 export function FaqSection() {
   return (
     <section id="faq" className="mx-auto max-w-[920px] px-5 pt-[120px] sm:px-7">
-      <SectionHeading title="Frequently asked questions" />
-      <div className="mt-12 border-t border-[#dde3ea]">
+      <SectionHeading kicker="Questions" title="Frequently asked questions" />
+      <Reveal className="mt-12 border-t border-line" delay={0.1}>
         {faqs.map((f, i) => (
-          <details key={f.q} className="group border-b border-[#dde3ea]" open={i === 0}>
-            <summary className="flex min-h-[72px] cursor-pointer list-none items-center justify-between gap-4 px-1 py-5 text-xl font-medium [&::-webkit-details-marker]:hidden">
+          <details key={f.q} className="group border-b border-line" open={i === 0}>
+            <summary className="flex min-h-[72px] cursor-pointer list-none items-center justify-between gap-4 px-1 py-5 font-display text-lg font-medium text-ink [&::-webkit-details-marker]:hidden">
               {f.q}
-              <span aria-hidden="true" className="shrink-0 text-2xl font-normal text-muted transition-transform group-open:rotate-45">
+              <span aria-hidden="true" className="shrink-0 text-2xl font-normal text-accent transition-transform group-open:rotate-45">
                 +
               </span>
             </summary>
-            <p className="px-1 pb-6 text-[17px] text-muted">{f.a}</p>
+            <p className="px-1 pb-6 text-[16px] leading-relaxed text-muted">{f.a}</p>
           </details>
         ))}
-      </div>
+      </Reveal>
     </section>
   );
 }
@@ -57,37 +69,42 @@ export function FaqSection() {
 export function ContactSection({ heading = "Let's build something great together" }: { heading?: string }) {
   return (
     <section id="contact" className="mx-auto max-w-[1280px] px-5 py-[120px] sm:px-7">
-      <div className="flex flex-wrap items-start gap-12 rounded-[40px] bg-brand p-7 text-white sm:p-12 lg:p-[88px]">
-        <div className="min-w-0 flex-[1_1_380px]">
-          <h2 className="text-[clamp(36px,4.6vw,60px)] font-medium leading-[1.08] tracking-[-0.03em]">{heading}</h2>
-          <p className="mt-5 text-[19px] text-brand-soft">
-            Tell us about your idea. We reply within one business day with next steps.
-          </p>
-          <div className="mt-9 flex flex-col gap-2.5 text-[17px]">
-            {site.email && (
-              <a href={`mailto:${site.email}`} className="text-white underline-offset-4 hover:text-white hover:underline">
-                {site.email}
-              </a>
-            )}
-            {site.phone && (
-              <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="text-white hover:text-white hover:underline">
-                {site.phone}
-              </a>
-            )}
-            {site.whatsapp && (
-              <a
-                href={`https://wa.me/${site.whatsapp}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white hover:text-white hover:underline"
-              >
-                Chat on WhatsApp
-              </a>
-            )}
+      <Reveal className="grid-field relative overflow-hidden rounded-[28px] border border-line bg-bg-raised">
+        <div className="relative flex flex-wrap items-start gap-12 p-7 sm:p-12 lg:p-[80px]">
+          <div className="min-w-0 flex-[1_1_380px]">
+            <p className="label mb-4 text-accent">Start here</p>
+            <h2 className="text-balance font-display text-[clamp(32px,4.2vw,54px)] font-medium leading-[1.08] tracking-[-0.02em]">
+              {heading}
+            </h2>
+            <p className="mt-5 text-[18px] text-muted">
+              Tell us about your idea. We reply within one business day with next steps.
+            </p>
+            <div className="mt-9 flex flex-col gap-2.5 text-[16px]">
+              {site.email && (
+                <a href={`mailto:${site.email}`} className="text-ink underline-offset-4 hover:text-accent hover:underline">
+                  {site.email}
+                </a>
+              )}
+              {site.phone && (
+                <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="text-muted hover:text-ink">
+                  {site.phone}
+                </a>
+              )}
+              {site.whatsapp && (
+                <a
+                  href={`https://wa.me/${site.whatsapp}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted hover:text-ink"
+                >
+                  Chat on WhatsApp
+                </a>
+              )}
+            </div>
           </div>
+          <ContactForm />
         </div>
-        <ContactForm />
-      </div>
+      </Reveal>
     </section>
   );
 }

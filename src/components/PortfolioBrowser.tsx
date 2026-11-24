@@ -42,7 +42,7 @@ export function PortfolioBrowser({ projects, industries }: { projects: Project[]
   return (
     <>
       <div className="mx-auto max-w-[1280px] px-5 sm:px-7">
-        <label className="mx-auto mt-10 flex min-h-[60px] max-w-[620px] items-center rounded-full bg-surface px-6">
+        <label className="mx-auto mt-10 flex min-h-[58px] max-w-[620px] items-center rounded-[10px] border border-line-strong bg-bg-raised px-6">
           <span className="sr-only">Search projects</span>
           <input
             type="search"
@@ -52,7 +52,7 @@ export function PortfolioBrowser({ projects, industries }: { projects: Project[]
               setLimit(PAGE_SIZE);
             }}
             placeholder="Search by project, industry or technology"
-            className="w-full bg-transparent py-4 text-[17px] outline-none placeholder:text-subtle"
+            className="w-full bg-transparent py-4 text-[16px] text-ink outline-none placeholder:text-subtle"
           />
         </label>
 
@@ -70,11 +70,11 @@ export function PortfolioBrowser({ projects, industries }: { projects: Project[]
                 }}
                 className={
                   active
-                    ? "min-h-11 rounded-[10px] border border-brand-soft bg-brand-soft px-4.5 text-[15px] font-semibold text-brand-ink"
-                    : "min-h-11 rounded-[10px] border border-outline bg-white px-4.5 text-[15px] font-medium text-muted hover:bg-surface"
+                    ? "label min-h-11 rounded-[8px] border border-accent-line bg-accent-soft px-4.5 text-accent"
+                    : "label min-h-11 rounded-[8px] border border-line-strong bg-bg-raised px-4.5 text-muted hover:text-ink"
                 }
               >
-                {c.label} <span className={active ? "font-medium" : "text-subtle"}>{c.count}</span>
+                {c.label} <span className={active ? "text-accent" : "text-subtle"}>{c.count}</span>
               </button>
             );
           })}
@@ -92,7 +92,7 @@ export function PortfolioBrowser({ projects, industries }: { projects: Project[]
                 setIndustry(e.target.value);
                 setLimit(PAGE_SIZE);
               }}
-              className="rounded-[10px] border border-outline bg-white px-3.5 py-2.5 text-[15px] text-ink"
+              className="rounded-[8px] border border-line-strong bg-bg-raised px-3.5 py-2.5 text-[15px] text-ink"
             >
               <option value="All">All industries</option>
               {industries.map((i) => (
@@ -113,12 +113,12 @@ export function PortfolioBrowser({ projects, industries }: { projects: Project[]
             ))}
           </div>
         ) : (
-          <div className="rounded-[28px] bg-surface px-6 py-16 text-center">
-            <p className="text-xl font-medium">No projects match your search</p>
+          <div className="rounded-[20px] border border-line bg-bg-raised px-6 py-16 text-center">
+            <p className="font-display text-xl font-medium text-ink">No projects match your search</p>
             <button
               type="button"
               onClick={reset}
-              className="mt-4 rounded-full border border-outline bg-white px-6 py-3 font-semibold text-brand"
+              className="label mt-4 rounded-[8px] border border-line-strong bg-bg px-6 py-3 text-accent"
             >
               Clear filters
             </button>
@@ -130,7 +130,7 @@ export function PortfolioBrowser({ projects, industries }: { projects: Project[]
             <button
               type="button"
               onClick={() => setLimit((l) => l + PAGE_SIZE)}
-              className="rounded-full border border-outline bg-white px-8 py-3.5 font-semibold text-brand hover:bg-surface"
+              className="label rounded-[8px] border border-line-strong bg-bg-raised px-8 py-3.5 text-ink hover:border-accent-line hover:text-accent"
             >
               Load more projects
             </button>

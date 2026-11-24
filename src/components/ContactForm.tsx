@@ -27,11 +27,15 @@ export function ContactForm() {
     setSent(true);
   }
 
-  const field = "rounded-xl border border-outline bg-white px-3.5 py-3.5 text-base text-ink";
+  const field =
+    "rounded-[8px] border border-line-strong bg-bg px-3.5 py-3.5 text-base text-ink placeholder:text-subtle focus:border-accent-line";
   const label = "flex flex-col gap-1.5 text-sm font-medium text-muted";
 
   return (
-    <form onSubmit={onSubmit} className="grid min-w-0 flex-[1_1_440px] gap-4 rounded-[28px] bg-white p-6 text-ink sm:grid-cols-2 sm:p-8">
+    <form
+      onSubmit={onSubmit}
+      className="relative grid min-w-0 flex-[1_1_440px] gap-4 rounded-[20px] border border-line bg-bg p-6 text-ink sm:grid-cols-2 sm:p-8"
+    >
       <label className={label}>
         Name
         <input name="name" type="text" required autoComplete="name" className={field} />
@@ -57,7 +61,7 @@ export function ContactForm() {
         <textarea name="message" rows={4} required className={field} />
       </label>
       <div className="flex flex-wrap items-center gap-4 sm:col-span-2">
-        <button type="submit" className="rounded-full bg-brand px-8 py-3.5 font-semibold text-white hover:bg-brand-ink">
+        <button type="submit" className="label rounded-[8px] bg-accent px-8 py-3.5 text-accent-ink hover:bg-ink">
           Send message
         </button>
         {sent && <span className="text-sm text-muted">Your email app should open with the message ready to send.</span>}
