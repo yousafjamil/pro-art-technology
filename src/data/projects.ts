@@ -7,6 +7,7 @@
 //  Pictures: put screenshots in  public/projects/<slug>/
 //  and list them in `images`, e.g.
 //      images: ["/projects/quick-swapper/1.png", "/projects/quick-swapper/2.png"],
+//  Website screenshots are  public/projects/<slug>/site.jpg  (1440 x 900).
 //  The first image is used as the cover. Without images, the card and
 //  the project page show the project's technical drawing, set up in
 //  src/data/drawings.ts (a new project without one gets a plain drawing).
@@ -30,6 +31,9 @@ export type Project = {
   description?: string; // longer text shown on the project page
   links: ProjectLink[];
   images?: string[];
+  // How `images` are framed: "phone" (app screens) or "browser" (website
+  // screenshots). Default: "phone" for a Mobile App, "browser" for the rest.
+  imageFrame?: "phone" | "browser";
   tech?: string[];
   featured?: boolean; // show on the homepage
 };
@@ -77,6 +81,7 @@ export const projects: Project[] = [
     description:
       "A corporate web platform presenting LMS's logistics services — multi-client warehousing, dedicated warehousing, e-commerce fulfillment, and value-added services.",
     links: [{ kind: "website", url: "https://lms-solutions.com/" }],
+    images: ["/projects/lms-solutions/site.jpg"],
     featured: true,
   },
   {
@@ -140,6 +145,7 @@ export const projects: Project[] = [
     description:
       "A professional website for ITEC Experts, presenting their IT services and digital solutions to new clients.",
     links: [{ kind: "website", url: "https://itecexperts.com/" }],
+    images: ["/projects/itec-experts/site.jpg"],
   },
   {
     slug: "build-hub",
@@ -148,6 +154,7 @@ export const projects: Project[] = [
     industry: "Business",
     summary: "Business website designed and developed by ProArt Technology.",
     links: [{ kind: "website", url: "https://build-hub.net/" }],
+    images: ["/projects/build-hub/site.jpg"],
   },
   {
     slug: "al-ashjar-al-raqiah",
@@ -156,6 +163,7 @@ export const projects: Project[] = [
     industry: "Business",
     summary: "Business website designed and developed by ProArt Technology.",
     links: [{ kind: "website", url: "https://alashjaralraqiah.com/" }],
+    images: ["/projects/al-ashjar-al-raqiah/site.jpg"],
   },
   {
     slug: "sadad",
@@ -164,6 +172,7 @@ export const projects: Project[] = [
     industry: "Business",
     summary: "Business website designed and developed by ProArt Technology.",
     links: [{ kind: "website", url: "https://sadadad.com/en" }],
+    images: ["/projects/sadad/site.jpg"],
   },
   {
     slug: "luckie",
@@ -174,6 +183,8 @@ export const projects: Project[] = [
     description:
       "LUCKIE is a community mobile app for expatriates and local community members, starting in Saudi Arabia. Five areas: Home (news, posts, jobs and a shared map), Challenges (quizzes and a leaderboard), AI (chatbot and photo/video tools), Inbox (chat and invitations) and Profile.",
     links: [{ kind: "website", url: "https://luckieapp.com/" }],
+    images: ["/projects/luckie/site.jpg"],
+    imageFrame: "browser", // a screenshot of the website, not of the app
     featured: true,
   },
   {
@@ -183,6 +194,7 @@ export const projects: Project[] = [
     industry: "Business",
     summary: "Business website designed and developed by ProArt Technology.",
     links: [{ kind: "website", url: "https://kingdomofprojects.com/" }],
+    images: ["/projects/kingdom-of-projects/site.jpg"],
   },
   {
     slug: "zoom-zamani",
@@ -193,6 +205,7 @@ export const projects: Project[] = [
     description:
       "A business website for Zoom Zamani Studio, a Riyadh photography studio — photo printing and restoration, commercial and product photography, event photography, and an art workshop for frames and photo albums.",
     links: [{ kind: "website", url: "https://zoomzamani.com/" }],
+    images: ["/projects/zoom-zamani/site.jpg"],
   },
 ];
 

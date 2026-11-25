@@ -19,7 +19,7 @@ function BrowserFrame({ children, large }: { children: React.ReactNode; large?: 
   return (
     <div
       className={`flex w-[92%] flex-col overflow-hidden rounded-t-[6px] border border-b-0 border-line-strong bg-bg-raised ${
-        large ? "h-[min(520px,52vw)] min-h-[260px] max-w-[980px]" : "h-[184px]"
+        large ? "max-w-[980px]" : "h-[184px]"
       }`}
     >
       <div className="flex h-7 shrink-0 items-center gap-1.5 border-b border-line px-3">
@@ -27,7 +27,8 @@ function BrowserFrame({ children, large }: { children: React.ReactNode; large?: 
         <span className="size-2 rounded-full border border-line-strong" />
         <span className="size-2 rounded-full border border-line-strong" />
       </div>
-      <div className="relative flex-1 overflow-hidden">{children}</div>
+      {/* Large: the screenshots' own 16:10 (1440 x 900), so nothing is cut off on a phone. */}
+      <div className={`relative overflow-hidden ${large ? "aspect-[16/10]" : "flex-1"}`}>{children}</div>
     </div>
   );
 }
@@ -52,12 +53,12 @@ function PhoneFrame({ children, large, short }: { children: React.ReactNode; lar
 export function ProjectVisual({ project, large = false }: { project: Project; large?: boolean }) {
   const [failed, setFailed] = useState(false);
   const fail = useRef(() => setFailed(true)).current;
-  const isApp = project.category === "Mobile App";
+  const frame = project.imageFrame ?? (project.category === "Mobile App" ? "phone" : "browser");
 
   // Only ever show a screenshot when a real one has been added by hand to
   // public/projects/<slug>/ — no live/auto screenshot service, so there is
   // never a "generating preview" state stuck on screen.
-  if (isApp && project.images?.length && !failed) {
+  if (frame === "phone" && project.images?.length && !failed) {
     return (
       <div className="flex items-end gap-3 sm:gap-4">
         {project.images.slice(0, large ? 3 : 2).map((src, i) => (
