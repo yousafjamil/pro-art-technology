@@ -7,8 +7,9 @@
 //  Pictures: put screenshots in  public/projects/<slug>/
 //  and list them in `images`, e.g.
 //      images: ["/projects/quick-swapper/1.png", "/projects/quick-swapper/2.png"],
-//  The first image is used as the cover. Without images, websites
-//  show a live screenshot of the site and apps show a phone preview.
+//  The first image is used as the cover. Without images, the card and
+//  the project page show the project's technical drawing, set up in
+//  src/data/drawings.ts (a new project without one gets a plain drawing).
 // ─────────────────────────────────────────────────────────────
 
 export type ProjectCategory = "Mobile App" | "Web Platform" | "Website" | "Software";

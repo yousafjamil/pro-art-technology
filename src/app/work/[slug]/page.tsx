@@ -68,9 +68,14 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
       </section>
 
       <Reveal delay={0.08} className="shell pt-12">
-        <div className="grid-field flex items-end justify-center overflow-hidden rounded-[8px] border border-line bg-bg-raised px-4 pt-10 sm:px-12 sm:pt-16">
+        {project.images?.length ? (
+          <div className="grid-field flex items-end justify-center overflow-hidden rounded-[8px] border border-line bg-bg-raised px-4 pt-10 sm:px-12 sm:pt-16">
+            <ProjectVisual project={project} large />
+          </div>
+        ) : (
+          // No screenshots yet: the project's drawing sheet, which carries its own frame.
           <ProjectVisual project={project} large />
-        </div>
+        )}
       </Reveal>
 
       <section className="shell grid gap-12 pt-24 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] lg:gap-16">

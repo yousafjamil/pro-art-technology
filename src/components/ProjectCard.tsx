@@ -11,7 +11,7 @@ export function ProjectCard({ project, headingLevel = "h3" }: { project: Project
       href={`/work/${project.slug}`}
       className="group flex h-full flex-col overflow-hidden rounded-[8px] border border-line bg-bg-raised transition-colors hover:border-line-strong"
     >
-      <div className="grid-field relative flex h-[232px] items-end justify-center overflow-hidden border-b border-line bg-bg px-6 pt-12">
+      <div className="grid-field @container relative flex h-[232px] items-end justify-center overflow-hidden border-b border-line bg-bg px-6 pt-12">
         <span className="absolute left-4 top-4">
           <SpecMark index={projectNumber(project)} total={projects.length} />
         </span>
