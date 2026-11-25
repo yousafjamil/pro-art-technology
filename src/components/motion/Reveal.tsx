@@ -9,7 +9,7 @@ export function Reveal({
   children,
   delay = 0,
   className,
-  y = 18,
+  y = 8,
 }: {
   children: React.ReactNode;
   delay?: number;
@@ -22,7 +22,7 @@ export function Reveal({
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.4, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>
@@ -32,7 +32,7 @@ export function Reveal({
 export function RevealGroup({
   children,
   className,
-  stagger = 0.08,
+  stagger = 0.05,
 }: {
   children: React.ReactNode;
   className?: string;
@@ -51,13 +51,13 @@ export function RevealGroup({
   );
 }
 
-export function RevealItem({ children, className, y = 18 }: { children: React.ReactNode; className?: string; y?: number }) {
+export function RevealItem({ children, className, y = 8 }: { children: React.ReactNode; className?: string; y?: number }) {
   return (
     <motion.div
       className={className}
       variants={{
         hidden: { opacity: 0, y },
-        show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] } },
+        show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] } },
       }}
     >
       {children}

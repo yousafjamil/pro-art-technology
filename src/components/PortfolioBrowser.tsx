@@ -41,50 +41,53 @@ export function PortfolioBrowser({ projects, industries }: { projects: Project[]
 
   return (
     <>
-      <div className="mx-auto max-w-[1280px] px-5 sm:px-7">
-        <label className="mx-auto mt-10 flex min-h-[58px] max-w-[620px] items-center rounded-[10px] border border-line-strong bg-bg-raised px-6">
-          <span className="sr-only">Search projects</span>
-          <input
-            type="search"
-            value={query}
-            onChange={(e) => {
-              setQuery(e.target.value);
-              setLimit(PAGE_SIZE);
-            }}
-            placeholder="Search by project, industry or technology"
-            className="w-full bg-transparent py-4 text-[16px] text-ink outline-none placeholder:text-subtle"
-          />
-        </label>
+      <div className="shell">
+        <div className="mt-12 flex flex-wrap items-center gap-x-6 gap-y-4 border-t border-line pt-6">
+          <label className="flex min-h-11 w-full max-w-[440px] items-center rounded-[4px] border border-line-strong bg-bg-raised px-3 focus-within:border-muted">
+            <span className="sr-only">Search projects</span>
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => {
+                setQuery(e.target.value);
+                setLimit(PAGE_SIZE);
+              }}
+              placeholder="Search by project, industry or technology"
+              className="w-full bg-transparent py-2.5 text-[16px] text-ink outline-none placeholder:text-subtle"
+            />
+          </label>
 
-        <div role="group" aria-label="Filter by type" className="mt-9 flex flex-wrap justify-center gap-2">
-          {chips.map((c) => {
-            const active = c.label === category;
-            return (
-              <button
-                key={c.label}
-                type="button"
-                aria-pressed={active}
-                onClick={() => {
-                  setCategory(c.label);
-                  setLimit(PAGE_SIZE);
-                }}
-                className={
-                  active
-                    ? "label min-h-11 rounded-[8px] border border-accent-line bg-accent-soft px-4.5 text-accent"
-                    : "label min-h-11 rounded-[8px] border border-line-strong bg-bg-raised px-4.5 text-muted hover:text-ink"
-                }
-              >
-                {c.label} <span className={active ? "text-accent" : "text-subtle"}>{c.count}</span>
-              </button>
-            );
-          })}
+          <div role="group" aria-label="Filter by type" className="flex flex-wrap gap-2">
+            {chips.map((c) => {
+              const active = c.label === category;
+              return (
+                <button
+                  key={c.label}
+                  type="button"
+                  aria-pressed={active}
+                  onClick={() => {
+                    setCategory(c.label);
+                    setLimit(PAGE_SIZE);
+                  }}
+                  className={`inline-flex min-h-11 items-center gap-2 rounded-[4px] border px-3 text-[14px] transition-colors ${
+                    active
+                      ? "border-line-strong bg-bg-raised-2 text-ink"
+                      : "border-line text-muted hover:border-line-strong hover:text-ink"
+                  }`}
+                >
+                  {c.label} <span className="meta text-subtle">{c.count}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
-        <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-5">
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
           <p className="text-[15px] text-muted" aria-live="polite">
-            Showing <strong className="font-semibold text-ink">{shown.length}</strong> of {matches.length} projects
+            Showing <span className="tabular-nums text-ink">{shown.length}</span> of{" "}
+            <span className="tabular-nums">{matches.length}</span> projects
           </p>
-          <label className="inline-flex items-center gap-2.5 text-[15px] text-muted">
+          <label className="inline-flex items-center gap-3 text-[15px] text-muted">
             Industry
             <select
               value={industry}
@@ -92,7 +95,7 @@ export function PortfolioBrowser({ projects, industries }: { projects: Project[]
                 setIndustry(e.target.value);
                 setLimit(PAGE_SIZE);
               }}
-              className="rounded-[8px] border border-line-strong bg-bg-raised px-3.5 py-2.5 text-[15px] text-ink"
+              className="min-h-11 rounded-[4px] border border-line-strong bg-bg-raised px-3 text-[15px] text-ink"
             >
               <option value="All">All industries</option>
               {industries.map((i) => (
@@ -105,33 +108,25 @@ export function PortfolioBrowser({ projects, industries }: { projects: Project[]
         </div>
       </div>
 
-      <div className="mx-auto max-w-[1280px] px-5 pt-8 sm:px-7">
+      <div className="shell pt-8">
         {shown.length > 0 ? (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
             {shown.map((p) => (
               <ProjectCard key={p.slug} project={p} headingLevel="h2" />
             ))}
           </div>
         ) : (
-          <div className="rounded-[20px] border border-line bg-bg-raised px-6 py-16 text-center">
-            <p className="font-display text-xl font-medium text-ink">No projects match your search</p>
-            <button
-              type="button"
-              onClick={reset}
-              className="label mt-4 rounded-[8px] border border-line-strong bg-bg px-6 py-3 text-accent"
-            >
+          <div className="rounded-[8px] border border-line bg-bg-raised px-6 py-16">
+            <p className="text-[20px] text-ink">No projects match your search</p>
+            <button type="button" onClick={reset} className="btn btn-line mt-6">
               Clear filters
             </button>
           </div>
         )}
 
         {matches.length > shown.length && (
-          <div className="mt-10 text-center">
-            <button
-              type="button"
-              onClick={() => setLimit((l) => l + PAGE_SIZE)}
-              className="label rounded-[8px] border border-line-strong bg-bg-raised px-8 py-3.5 text-ink hover:border-accent-line hover:text-accent"
-            >
+          <div className="mt-10">
+            <button type="button" onClick={() => setLimit((l) => l + PAGE_SIZE)} className="btn btn-line">
               Load more projects
             </button>
           </div>

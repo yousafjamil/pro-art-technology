@@ -28,14 +28,11 @@ export function ContactForm() {
   }
 
   const field =
-    "rounded-[8px] border border-line-strong bg-bg px-3.5 py-3.5 text-base text-ink placeholder:text-subtle focus:border-accent-line";
-  const label = "flex flex-col gap-1.5 text-sm font-medium text-muted";
+    "min-h-11 rounded-[4px] border border-line-strong bg-bg px-3 py-2.5 text-base text-ink placeholder:text-subtle focus:border-muted focus:outline-none focus-visible:outline-2 focus-visible:outline-accent";
+  const label = "flex flex-col gap-2 text-[14px] text-muted";
 
   return (
-    <form
-      onSubmit={onSubmit}
-      className="relative grid min-w-0 flex-[1_1_440px] gap-4 rounded-[20px] border border-line bg-bg p-6 text-ink sm:grid-cols-2 sm:p-8"
-    >
+    <form onSubmit={onSubmit} className="grid min-w-0 content-start gap-5 text-ink sm:grid-cols-2">
       <label className={label}>
         Name
         <input name="name" type="text" required autoComplete="name" className={field} />
@@ -58,13 +55,13 @@ export function ContactForm() {
       </label>
       <label className={`${label} sm:col-span-2`}>
         About your project
-        <textarea name="message" rows={4} required className={field} />
+        <textarea name="message" rows={5} required className={field} />
       </label>
       <div className="flex flex-wrap items-center gap-4 sm:col-span-2">
-        <button type="submit" className="label rounded-[8px] bg-accent px-8 py-3.5 text-accent-ink hover:bg-ink">
+        <button type="submit" className="btn btn-primary">
           Send message
         </button>
-        {sent && <span className="text-sm text-muted">Your email app should open with the message ready to send.</span>}
+        {sent && <span className="text-[14px] text-muted">Your email app should open with the message ready to send.</span>}
       </div>
     </form>
   );

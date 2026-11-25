@@ -1,23 +1,48 @@
 import { site } from "@/config/site";
 import { Reveal } from "./motion/Reveal";
 import { ContactForm } from "./ContactForm";
+import { SpecMark } from "./SpecMark";
+
+// Every section opens the same way: a full-width hairline, the sheet index
+// on the left column, the title and intro in the wider right column.
+export const SECTION_GRID = "grid gap-x-12 gap-y-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]";
+
+// Homepage sheet numbering: the hero is 00, these are 01 to 06.
+export const SHEETS = 6;
 
 export function SectionHeading({
   title,
   intro,
   kicker,
-  center = true,
+  index,
+  action,
 }: {
   title: string;
   intro?: string;
   kicker?: string;
-  center?: boolean;
+  index?: number;
+  action?: React.ReactNode;
 }) {
   return (
-    <Reveal className={center ? "mx-auto max-w-[820px] text-center" : "max-w-[640px]"}>
-      {kicker && <p className="label mb-4 text-accent">{kicker}</p>}
-      <h2 className="text-balance font-display text-[clamp(32px,4.2vw,54px)] font-medium leading-[1.1] tracking-[-0.02em]">{title}</h2>
-      {intro && <p className={`mt-4 text-[18px] text-muted ${center ? "mx-auto max-w-[640px]" : ""}`}>{intro}</p>}
+    <Reveal className={`${SECTION_GRID} border-t border-line pt-6`}>
+      <div>
+        {index !== undefined ? (
+          <SpecMark index={index} total={SHEETS}>
+            {kicker}
+          </SpecMark>
+        ) : (
+          kicker && <p className="text-[14px] text-subtle">{kicker}</p>
+        )}
+      </div>
+      <div className="flex flex-wrap items-end justify-between gap-x-12 gap-y-6">
+        <div className="max-w-[720px]">
+          <h2 className="text-balance text-[clamp(30px,3.4vw,44px)] font-normal leading-[1.12] tracking-[-0.02em] text-ink">
+            {title}
+          </h2>
+          {intro && <p className="mt-4 max-w-[36rem] text-[18px] leading-[1.6] text-muted">{intro}</p>}
+        </div>
+        {action}
+      </div>
     </Reveal>
   );
 }
@@ -45,62 +70,92 @@ const faqs = [
   },
 ];
 
-export function FaqSection() {
+export function FaqSection({ index }: { index?: number }) {
   return (
-    <section id="faq" className="mx-auto max-w-[920px] px-5 pt-[120px] sm:px-7">
-      <SectionHeading kicker="Questions" title="Frequently asked questions" />
-      <Reveal className="mt-12 border-t border-line" delay={0.1}>
-        {faqs.map((f, i) => (
-          <details key={f.q} className="group border-b border-line" open={i === 0}>
-            <summary className="flex min-h-[72px] cursor-pointer list-none items-center justify-between gap-4 px-1 py-5 font-display text-lg font-medium text-ink [&::-webkit-details-marker]:hidden">
-              {f.q}
-              <span aria-hidden="true" className="shrink-0 text-2xl font-normal text-accent transition-transform group-open:rotate-45">
-                +
-              </span>
-            </summary>
-            <p className="px-1 pb-6 text-[16px] leading-relaxed text-muted">{f.a}</p>
-          </details>
-        ))}
-      </Reveal>
+    <section id="faq" className="shell scroll-mt-20 pt-32">
+      <SectionHeading index={index} kicker="Questions" title="Frequently asked questions" />
+      <div className={`${SECTION_GRID} mt-12`}>
+        <div aria-hidden="true" className="hidden lg:block" />
+        <Reveal className="border-t border-line" delay={0.05}>
+          {faqs.map((f, i) => (
+            <details key={f.q} className="group border-b border-line" open={i === 0}>
+              <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-6 py-5 text-[18px] font-medium text-ink [&::-webkit-details-marker]:hidden">
+                {f.q}
+                <span aria-hidden="true" className="meta shrink-0 text-subtle transition-transform duration-150 group-open:rotate-45">
+                  +
+                </span>
+              </summary>
+              <p className="max-w-[44rem] pb-6 text-[16px] leading-[1.65] text-muted">{f.a}</p>
+            </details>
+          ))}
+        </Reveal>
+      </div>
     </section>
   );
 }
 
-export function ContactSection({ heading = "Let's build something great together" }: { heading?: string }) {
+export function ContactSection({
+  heading = "Let's build something great together",
+  index,
+}: {
+  heading?: string;
+  index?: number;
+}) {
   return (
-    <section id="contact" className="mx-auto max-w-[1280px] px-5 py-[120px] sm:px-7">
-      <Reveal className="grid-field relative overflow-hidden rounded-[28px] border border-line bg-bg-raised">
-        <div className="relative flex flex-wrap items-start gap-12 p-7 sm:p-12 lg:p-[80px]">
-          <div className="min-w-0 flex-[1_1_380px]">
-            <p className="label mb-4 text-accent">Start here</p>
-            <h2 className="text-balance font-display text-[clamp(32px,4.2vw,54px)] font-medium leading-[1.08] tracking-[-0.02em]">
+    <section id="contact" className="shell scroll-mt-20 py-32">
+      <Reveal className="rounded-[8px] border border-line bg-bg-raised">
+        <div className="grid gap-12 p-6 sm:p-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:p-16">
+          <div className="min-w-0">
+            {index !== undefined ? (
+              <SpecMark index={index} total={SHEETS}>
+                Start here
+              </SpecMark>
+            ) : (
+              <p className="text-[14px] text-subtle">Start here</p>
+            )}
+            <h2 className="mt-6 text-balance text-[clamp(30px,3.4vw,44px)] font-normal leading-[1.12] tracking-[-0.02em]">
               {heading}
             </h2>
-            <p className="mt-5 text-[18px] text-muted">
+            <p className="mt-5 max-w-[30rem] text-[18px] leading-[1.6] text-muted">
               Tell us about your idea. We reply within one business day with next steps.
             </p>
-            <div className="mt-9 flex flex-col gap-2.5 text-[16px]">
+            <dl className="mt-10 border-t border-line text-[16px]">
               {site.email && (
-                <a href={`mailto:${site.email}`} className="text-ink underline-offset-4 hover:text-accent hover:underline">
-                  {site.email}
-                </a>
+                <div className="flex items-baseline justify-between gap-4 border-b border-line py-3">
+                  <dt className="meta text-subtle">Email</dt>
+                  <dd>
+                    <a href={`mailto:${site.email}`} className="text-ink underline-offset-4 hover:underline">
+                      {site.email}
+                    </a>
+                  </dd>
+                </div>
               )}
               {site.phone && (
-                <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="text-muted hover:text-ink">
-                  {site.phone}
-                </a>
+                <div className="flex items-baseline justify-between gap-4 border-b border-line py-3">
+                  <dt className="meta text-subtle">Phone</dt>
+                  <dd>
+                    <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="tabular-nums text-ink underline-offset-4 hover:underline">
+                      {site.phone}
+                    </a>
+                  </dd>
+                </div>
               )}
               {site.whatsapp && (
-                <a
-                  href={`https://wa.me/${site.whatsapp}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-muted hover:text-ink"
-                >
-                  Chat on WhatsApp
-                </a>
+                <div className="flex items-baseline justify-between gap-4 border-b border-line py-3">
+                  <dt className="meta text-subtle">WhatsApp</dt>
+                  <dd>
+                    <a
+                      href={`https://wa.me/${site.whatsapp}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-ink underline-offset-4 hover:underline"
+                    >
+                      Chat on WhatsApp
+                    </a>
+                  </dd>
+                </div>
               )}
-            </div>
+            </dl>
           </div>
           <ContactForm />
         </div>

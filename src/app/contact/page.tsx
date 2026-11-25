@@ -10,19 +10,19 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
-      <section className="mx-auto max-w-[1280px] px-5 pt-20 text-center sm:px-7">
-        <Reveal>
-          <p className="label text-accent">Contact</p>
-          <h1 className="mt-5 font-display text-[clamp(44px,6vw,80px)] font-medium leading-[1.05] tracking-[-0.03em]">Start a project</h1>
-          <p className="mx-auto mt-5 max-w-[620px] text-[clamp(17px,1.6vw,20px)] text-muted">
+      <section className="shell pt-16 sm:pt-20">
+        <Reveal className="max-w-[720px]">
+          <p className="text-[14px] text-subtle">Contact</p>
+          <h1 className="mt-5 text-[clamp(40px,5vw,64px)] font-normal leading-[1.05] tracking-[-0.03em]">Start a project</h1>
+          <p className="mt-5 max-w-[36rem] text-[clamp(17px,1.4vw,19px)] leading-[1.6] text-muted">
             Share a few details and we&apos;ll get back to you with a plan, timeline and estimate.
           </p>
         </Reveal>
       </section>
-      <div className="-mt-10">
+      <div className="-mt-16">
         <ContactSection heading="Tell us about your project" />
       </div>
-      <div className="pb-[120px]">
+      <div className="-mt-16 pb-32">
         <FaqSection />
       </div>
     </>

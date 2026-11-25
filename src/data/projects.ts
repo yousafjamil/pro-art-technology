@@ -31,7 +31,6 @@ export type Project = {
   images?: string[];
   tech?: string[];
   featured?: boolean; // show on the homepage
-  tone?: "blue" | "green" | "gray" | "peach"; // card background colour
 };
 
 export const projects: Project[] = [
@@ -45,7 +44,6 @@ export const projects: Project[] = [
       "Yotto Health is a digital health platform that offers health monitoring services and helps users manage their health conditions in one place.",
     links: [{ kind: "website", url: "https://yotto.health/" }],
     featured: true,
-    tone: "blue",
   },
   {
     slug: "ride-chauffeur",
@@ -57,7 +55,6 @@ export const projects: Project[] = [
       "Ride Chauffeur makes it simple to book professional drivers and transport services online, with a smooth booking experience for every customer.",
     links: [{ kind: "website", url: "https://ridechauffeur.com/" }],
     featured: true,
-    tone: "gray",
   },
   {
     slug: "apopou-cashback",
@@ -69,7 +66,6 @@ export const projects: Project[] = [
       "Apopou is a mobile app that gives users a cashback system and cash-back offers, rewarding them every time they shop.",
     links: [{ kind: "play-store", url: "https://play.google.com/store/apps/details?id=com.cashback.apopou" }],
     featured: true,
-    tone: "green",
   },
   {
     slug: "lms-solutions",
@@ -81,7 +77,6 @@ export const projects: Project[] = [
       "A corporate web platform presenting LMS's logistics services — multi-client warehousing, dedicated warehousing, e-commerce fulfillment, and value-added services.",
     links: [{ kind: "website", url: "https://lms-solutions.com/" }],
     featured: true,
-    tone: "peach",
   },
   {
     slug: "uno-luxury",
@@ -93,7 +88,6 @@ export const projects: Project[] = [
       "Direct-to-consumer luxury marketplace — 100,000+ premium items at factory-direct pricing, with secure checkout and verified delivery across the United States.",
     links: [],
     featured: true,
-    tone: "gray",
   },
   {
     slug: "binops-pharma",
@@ -104,7 +98,6 @@ export const projects: Project[] = [
     description:
       "BinOps Pharma is a specialised mobile app for managing pharmaceutical services and products.",
     links: [{ kind: "play-store", url: "https://play.google.com/store/apps/details?id=com.binops.pharma.pk" }],
-    tone: "blue",
   },
   {
     slug: "ward-guide-first-aid",
@@ -115,7 +108,6 @@ export const projects: Project[] = [
     description:
       "Ward Guide is a first-aid guide app that helps people take the right steps quickly in emergency situations.",
     links: [{ kind: "play-store", url: "https://play.google.com/store/apps/details?id=com.firstaid.wardguide" }],
-    tone: "peach",
   },
   {
     slug: "quick-swapper",
@@ -127,7 +119,6 @@ export const projects: Project[] = [
       "A peer-to-peer swap marketplace where users exchange items across categories like vehicles, mobiles, furniture, and home goods.",
     links: [{ kind: "play-store", url: "https://play.google.com/store/apps/details?id=com.noman.quickSwapper" }],
     featured: true,
-    tone: "green",
   },
   {
     slug: "find-my-phone",
@@ -138,7 +129,6 @@ export const projects: Project[] = [
     description:
       "Find My Phone is a smart app that helps users find their lost phone using advanced alert tools.",
     links: [{ kind: "play-store", url: "https://play.google.com/store/apps/details?id=com.restmind.findmyphone" }],
-    tone: "gray",
   },
   {
     slug: "itec-experts",
@@ -149,7 +139,6 @@ export const projects: Project[] = [
     description:
       "A professional website for ITEC Experts, presenting their IT services and digital solutions to new clients.",
     links: [{ kind: "website", url: "https://itecexperts.com/" }],
-    tone: "blue",
   },
   {
     slug: "build-hub",
@@ -158,7 +147,6 @@ export const projects: Project[] = [
     industry: "Business",
     summary: "Business website designed and developed by ProArt Technology.",
     links: [{ kind: "website", url: "https://build-hub.net/" }],
-    tone: "gray",
   },
   {
     slug: "al-ashjar-al-raqiah",
@@ -167,7 +155,6 @@ export const projects: Project[] = [
     industry: "Business",
     summary: "Business website designed and developed by ProArt Technology.",
     links: [{ kind: "website", url: "https://alashjaralraqiah.com/" }],
-    tone: "green",
   },
   {
     slug: "sadad",
@@ -176,7 +163,6 @@ export const projects: Project[] = [
     industry: "Business",
     summary: "Business website designed and developed by ProArt Technology.",
     links: [{ kind: "website", url: "https://sadadad.com/en" }],
-    tone: "peach",
   },
   {
     slug: "luckie",
@@ -188,7 +174,6 @@ export const projects: Project[] = [
       "LUCKIE is a community mobile app for expatriates and local community members, starting in Saudi Arabia. Five areas: Home (news, posts, jobs and a shared map), Challenges (quizzes and a leaderboard), AI (chatbot and photo/video tools), Inbox (chat and invitations) and Profile.",
     links: [{ kind: "website", url: "https://luckieapp.com/" }],
     featured: true,
-    tone: "blue",
   },
   {
     slug: "kingdom-of-projects",
@@ -197,7 +182,6 @@ export const projects: Project[] = [
     industry: "Business",
     summary: "Business website designed and developed by ProArt Technology.",
     links: [{ kind: "website", url: "https://kingdomofprojects.com/" }],
-    tone: "gray",
   },
   {
     slug: "zoom-zamani",
@@ -208,7 +192,6 @@ export const projects: Project[] = [
     description:
       "A business website for Zoom Zamani Studio, a Riyadh photography studio — photo printing and restoration, commercial and product photography, event photography, and an art workshop for frames and photo albums.",
     links: [{ kind: "website", url: "https://zoomzamani.com/" }],
-    tone: "green",
   },
 ];
 
@@ -239,15 +222,9 @@ export function coverImage(project: Project) {
   return site ? websiteShot(site.url) : undefined;
 }
 
-// Each tone is a quiet per-project accent (a hairline, a glow, an initial's
-// color) rather than a pastel block. "blue" keeps using the site's single
-// accent lime so featured/flagship work still reads as the brightest. Every
-// value here is a CSS custom property, so it repaints for the light theme
-// too (see the html[data-theme="light"] block in globals.css) without any
-// change needed on this page.
-export const tones = {
-  blue: { bg: "bg-accent-soft", ink: "text-accent", fill: "bg-accent", line: "border-accent-line" },
-  green: { bg: "bg-green-soft", ink: "text-green-ink", fill: "bg-green-ink", line: "border-[color:var(--color-green-ink)]/35" },
-  gray: { bg: "bg-gray-soft", ink: "text-tone-gray", fill: "bg-tone-gray", line: "border-[color:var(--color-tone-gray)]/35" },
-  peach: { bg: "bg-peach-soft", ink: "text-peach-ink", fill: "bg-peach-ink", line: "border-[color:var(--color-peach-ink)]/35" },
-} as const;
+// Sheet number of a project in the full list ("03 / 16"), used by the card's
+// spec mark so the same project keeps the same number on every page.
+export function projectNumber(project: Project) {
+  // By slug, not by object: client components receive serialized copies.
+  return projects.findIndex((p) => p.slug === project.slug) + 1;
+}

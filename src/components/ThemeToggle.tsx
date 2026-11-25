@@ -4,8 +4,9 @@ import { useLayoutEffect, useState } from "react";
 
 export const THEME_STORAGE_KEY = "proart-theme";
 
+// Keep in step with --color-bg in globals.css and the bootstrap in layout.tsx.
 function themeColorFor(theme: "dark" | "light") {
-  return theme === "light" ? "#f6f3ec" : "#09090b";
+  return theme === "light" ? "#eeedea" : "#141516";
 }
 
 function applyTheme(theme: "dark" | "light") {
@@ -45,11 +46,11 @@ export function ThemeToggle() {
       onClick={toggle}
       aria-label={isLight ? "Switch to dark theme" : "Switch to light theme"}
       aria-pressed={isLight}
-      className="flex size-11 shrink-0 items-center justify-center rounded-[8px] border border-line-strong text-ink transition-colors hover:border-accent-line hover:text-accent"
+      className="flex size-11 shrink-0 items-center justify-center rounded-[4px] border border-line-strong text-muted transition-colors hover:bg-bg-raised-2 hover:text-ink sm:size-9"
     >
       {isLight ? (
         // Moon — tap to go dark
-        <svg aria-hidden="true" viewBox="0 0 20 20" width="19" height="19" fill="none">
+        <svg aria-hidden="true" viewBox="0 0 20 20" width="16" height="16" fill="none">
           <path
             d="M17.1 12.2a7.6 7.6 0 0 1-9.3-9.3 7.8 7.8 0 1 0 9.3 9.3Z"
             stroke="currentColor"
@@ -60,7 +61,7 @@ export function ThemeToggle() {
         </svg>
       ) : (
         // Sun — tap to go light
-        <svg aria-hidden="true" viewBox="0 0 20 20" width="19" height="19" fill="none">
+        <svg aria-hidden="true" viewBox="0 0 20 20" width="16" height="16" fill="none">
           <circle cx="10" cy="10" r="3.6" stroke="currentColor" strokeWidth="1.5" />
           <path
             d="M10 1.8v2.3M10 15.9v2.3M18.2 10h-2.3M4.1 10H1.8M15.7 4.3l-1.6 1.6M5.9 14.1l-1.6 1.6M15.7 15.7l-1.6-1.6M5.9 5.9 4.3 4.3"

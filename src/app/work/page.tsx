@@ -12,11 +12,11 @@ export const metadata: Metadata = {
 export default function WorkPage() {
   return (
     <>
-      <section className="mx-auto max-w-[1280px] px-5 pt-20 text-center sm:px-7">
-        <Reveal>
-          <p className="label text-accent">Portfolio</p>
-          <h1 className="mt-5 font-display text-[clamp(44px,6vw,80px)] font-medium leading-[1.05] tracking-[-0.03em]">Our work</h1>
-          <p className="mx-auto mt-5 max-w-[620px] text-[clamp(17px,1.6vw,20px)] text-muted">
+      <section className="shell pt-16 sm:pt-20">
+        <Reveal className="max-w-[720px]">
+          <p className="text-[14px] text-subtle">Portfolio</p>
+          <h1 className="mt-5 text-[clamp(40px,5vw,64px)] font-normal leading-[1.05] tracking-[-0.03em]">Our work</h1>
+          <p className="mt-5 max-w-[36rem] text-[clamp(17px,1.4vw,19px)] leading-[1.6] text-muted">
             Apps, platforms and websites we&apos;ve designed and built for our clients.
           </p>
         </Reveal>
@@ -24,13 +24,17 @@ export default function WorkPage() {
 
       <PortfolioBrowser projects={projects} industries={getIndustries()} />
 
-      <section className="mx-auto max-w-[1280px] px-5 py-[120px] sm:px-7">
-        <Reveal className="grid-field flex flex-wrap items-center justify-between gap-8 overflow-hidden rounded-[28px] border border-line bg-bg-raised p-9 sm:p-14 lg:p-20">
+      <section className="shell py-32">
+        <Reveal className="flex flex-wrap items-end justify-between gap-8 rounded-[8px] border border-line bg-bg-raised p-6 sm:p-10 lg:p-16">
           <div className="max-w-[640px]">
-            <h2 className="text-balance font-display text-[clamp(32px,4vw,52px)] font-medium leading-[1.1] tracking-[-0.02em]">Have a project like these?</h2>
-            <p className="mt-4 text-[18px] text-muted">Tell us your idea and get a free consultation within one business day.</p>
+            <h2 className="text-balance text-[clamp(30px,3.4vw,44px)] font-normal leading-[1.12] tracking-[-0.02em]">
+              Have a project like these?
+            </h2>
+            <p className="mt-4 text-[18px] leading-[1.6] text-muted">
+              Tell us your idea and get a free consultation within one business day.
+            </p>
           </div>
-          <Link href="/contact" className="label rounded-[8px] bg-accent px-8 py-4 text-accent-ink hover:bg-ink">
+          <Link href="/contact" className="btn btn-primary">
             Start a project
           </Link>
         </Reveal>

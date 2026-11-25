@@ -1,29 +1,34 @@
 import Link from "next/link";
-import { tones, type Project } from "@/data/projects";
+import { projectNumber, projects, type Project } from "@/data/projects";
 import { ProjectVisual } from "./ProjectVisual";
+import { SpecMark } from "./SpecMark";
 
 export function ProjectCard({ project, headingLevel = "h3" }: { project: Project; headingLevel?: "h2" | "h3" }) {
-  const tone = tones[project.tone ?? "blue"];
   const Heading = headingLevel;
 
   return (
     <Link
       href={`/work/${project.slug}`}
-      className={`group flex flex-col overflow-hidden rounded-[20px] border border-line bg-bg-raised transition-all duration-300 hover:-translate-y-1 hover:border-line-strong hover:text-ink`}
+      className="group flex h-full flex-col overflow-hidden rounded-[8px] border border-line bg-bg-raised transition-colors hover:border-line-strong"
     >
-      <div className="flex h-[230px] items-end justify-center overflow-hidden border-b border-line bg-bg px-6 pt-7">
+      <div className="grid-field relative flex h-[232px] items-end justify-center overflow-hidden border-b border-line bg-bg px-6 pt-12">
+        <span className="absolute left-4 top-4">
+          <SpecMark index={projectNumber(project)} total={projects.length} />
+        </span>
         <ProjectVisual project={project} />
       </div>
-      <div className="flex flex-1 flex-col gap-1.5 px-6 py-6">
-        <div className="flex items-center justify-between gap-3">
-          <Heading className="font-display text-[19px] font-semibold tracking-tight">{project.name}</Heading>
-          <span className={`label shrink-0 ${tone.ink}`}>{project.industry}</span>
+      <div className="flex flex-1 flex-col p-6">
+        <div className="flex items-baseline justify-between gap-4">
+          <Heading className="text-[19px] font-medium leading-tight text-ink">{project.name}</Heading>
+          <span className="shrink-0 text-[14px] text-subtle">{project.industry}</span>
         </div>
-        <span className="text-sm text-subtle">{project.category}</span>
-        <p className="mt-1.5 text-[15px] leading-relaxed text-muted">{project.summary}</p>
-        <span className="mt-auto flex items-center gap-1.5 pt-4 text-[14px] font-semibold text-ink">
+        <span className="mt-1 text-[14px] text-subtle">{project.category}</span>
+        <p className="mt-3 text-[15px] leading-[1.6] text-muted">{project.summary}</p>
+        <span className="mt-auto inline-flex items-center gap-2 pt-6 text-[14px] font-medium text-ink">
           View project
-          <span aria-hidden="true" className="text-accent transition-transform group-hover:translate-x-1">→</span>
+          <span aria-hidden="true" className="transition-transform duration-150 group-hover:translate-x-0.5">
+            →
+          </span>
         </span>
       </div>
     </Link>
