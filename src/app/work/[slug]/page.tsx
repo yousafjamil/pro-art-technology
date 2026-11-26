@@ -125,13 +125,13 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
               View all
             </Link>
           </div>
-          <RevealGroup className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+          {/* Plain grid, same as /work: these cards must always be visible,
+              not gated behind a scroll-triggered reveal. */}
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
             {more.map((p) => (
-              <RevealItem key={p.slug}>
-                <ProjectCard project={p} />
-              </RevealItem>
+              <ProjectCard key={p.slug} project={p} />
             ))}
-          </RevealGroup>
+          </div>
         </section>
       )}
 
