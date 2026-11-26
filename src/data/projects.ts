@@ -93,6 +93,7 @@ export const projects: Project[] = [
     description:
       "Direct-to-consumer luxury marketplace — 100,000+ premium items at factory-direct pricing, with secure checkout and verified delivery across the United States.",
     links: [],
+    images: ["/projects/uno-luxury/site.jpg"],
     featured: true,
   },
   {
@@ -124,6 +125,8 @@ export const projects: Project[] = [
     description:
       "A peer-to-peer swap marketplace where users exchange items across categories like vehicles, mobiles, furniture, and home goods.",
     links: [{ kind: "play-store", url: "https://play.google.com/store/apps/details?id=com.noman.quickSwapper" }],
+    images: ["/projects/quick-swapper/site.jpg"],
+    imageFrame: "browser", // a single marketing banner from the old site, not individual app screens
     featured: true,
   },
   {
