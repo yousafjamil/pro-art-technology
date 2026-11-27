@@ -266,18 +266,21 @@ export default function HomePage() {
       <section id="models" className="scroll-mt-28 py-24 lg:py-32">
         <div className="shell">
           <SectionHeading kicker="Pricing models" title="Work with us your way" />
-          <RevealGroup className="mt-14 grid gap-6 lg:grid-cols-3">
+          <RevealGroup className="mt-14 grid gap-6 lg:grid-cols-3 lg:gap-4 xl:gap-6">
             {models.map((m) => (
               <RevealItem
                 key={m.title}
-                className={`flex h-full flex-col p-7 sm:p-9 ${m.note ? "on-night" : "border-t-4 border-ink bg-stone"}`}
+                className={`flex h-full flex-col border-t-4 p-7 sm:p-9 lg:p-7 xl:p-9 ${m.note ? "on-night border-night" : "border-ink bg-stone"}`}
               >
-                <div className="flex min-h-8 items-start">
+                {/* The badge row keeps the three titles level side by side
+                    (the badge takes two lines in the narrow 1024-1279 cards);
+                    stacked on a phone, an empty one is only a gap. */}
+                <div className={`min-h-8 items-start lg:min-h-11 xl:min-h-8 ${m.note ? "flex" : "hidden lg:flex"}`}>
                   {m.note && <span className="eyebrow bg-signal px-2.5 py-1.5 text-ink">{m.note}</span>}
                 </div>
-                <h3 className="mt-8 text-[32px] font-bold leading-[1.05] tracking-[-0.03em]">{m.title}</h3>
+                <h3 className={`text-[32px] font-bold leading-[1.05] tracking-[-0.03em] ${m.note ? "mt-8" : "lg:mt-8"}`}>{m.title}</h3>
                 <p className={`mt-4 flex-1 text-[17px] leading-[1.6] ${m.note ? "text-on-night-muted" : "text-muted"}`}>{m.text}</p>
-                <Link href="/contact" className={`btn mt-10 self-start ${m.note ? "btn-primary" : "btn-dark"}`}>
+                <Link href="/contact" className={`btn mt-10 self-start lg:px-5 xl:px-6 ${m.note ? "btn-primary" : "btn-dark"}`}>
                   {m.cta} <span aria-hidden="true">→</span>
                 </Link>
               </RevealItem>
