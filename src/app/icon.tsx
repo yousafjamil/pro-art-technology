@@ -3,6 +3,7 @@ import { ImageResponse } from "next/og";
 export const size = { width: 32, height: 32 };
 export const contentType = "image/png";
 
+// The logo mark: the initials in black on a solid orange square.
 export default function Icon() {
   return new ImageResponse(
     (
@@ -13,12 +14,11 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#141516",
-          borderRadius: 4,
-          color: "#e8e9eb",
-          fontSize: 14,
-          fontWeight: 500,
-          fontFamily: "monospace",
+          background: "#ff5b14",
+          color: "#0b0b0c",
+          fontSize: 15,
+          fontWeight: 700,
+          letterSpacing: -1,
         }}
       >
         PA

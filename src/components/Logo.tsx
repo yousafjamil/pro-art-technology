@@ -1,14 +1,17 @@
 import Link from "next/link";
 import { site } from "@/config/site";
 
-export function Logo() {
+// The mark is a solid orange square with the initials; the wordmark sits
+// beside it. Colour of the wordmark follows the block it sits on.
+export function Logo({ onClick }: { onClick?: () => void }) {
   return (
-    <Link href="/" className="flex items-center gap-3 text-[17px] font-medium text-ink">
-      <span className="flex size-8 shrink-0 items-center justify-center rounded-[4px] border border-line-strong font-mono text-[12px] font-medium text-ink">
+    <Link href="/" onClick={onClick} className="flex min-h-11 items-center gap-3" aria-label={`${site.name}, home`}>
+      <span className="flex size-9 shrink-0 items-center justify-center bg-signal text-[15px] font-bold tracking-[-0.04em] text-ink">
         PA
       </span>
-      <span className="hidden sm:inline">
-        {site.shortName} <span className="text-muted">Technology</span>
+      <span className="text-[20px] font-bold leading-none tracking-[-0.03em]">
+        {site.shortName}
+        <span className="font-normal"> Technology</span>
       </span>
     </Link>
   );

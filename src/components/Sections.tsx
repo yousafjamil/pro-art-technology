@@ -1,48 +1,37 @@
 import { site } from "@/config/site";
 import { Reveal } from "./motion/Reveal";
 import { ContactForm } from "./ContactForm";
-import { SpecMark } from "./SpecMark";
 
-// Every section opens the same way: a full-width hairline, the sheet index
-// on the left column, the title and intro in the wider right column.
-export const SECTION_GRID = "grid gap-x-12 gap-y-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]";
-
-// Homepage sheet numbering: the hero is 00, these are 01 to 06.
-export const SHEETS = 6;
-
+// Every section opens the same way: the orange dash, a small uppercase name,
+// then a large heavy headline. `dark` for black and petrol blocks.
 export function SectionHeading({
   title,
   intro,
   kicker,
-  index,
   action,
+  dark = false,
+  as: Tag = "h2",
 }: {
   title: string;
   intro?: string;
   kicker?: string;
-  index?: number;
   action?: React.ReactNode;
+  dark?: boolean;
+  as?: "h1" | "h2";
 }) {
   return (
-    <Reveal className={`${SECTION_GRID} border-t border-line pt-6`}>
-      <div>
-        {index !== undefined ? (
-          <SpecMark index={index} total={SHEETS}>
-            {kicker}
-          </SpecMark>
-        ) : (
-          kicker && <p className="text-[14px] text-subtle">{kicker}</p>
+    <Reveal className="flex flex-wrap items-end justify-between gap-x-12 gap-y-8">
+      <div className="max-w-[920px]">
+        {kicker && (
+          <div className="flex items-center gap-4">
+            <span className="dash" aria-hidden="true" />
+            <p className={`eyebrow ${dark ? "text-on-night-muted" : "text-muted"}`}>{kicker}</p>
+          </div>
         )}
+        <Tag className={`headline text-balance ${kicker ? "mt-6" : ""}`}>{title}</Tag>
+        {intro && <p className={`lede mt-6 max-w-[40rem] ${dark ? "text-on-night-muted" : "text-muted"}`}>{intro}</p>}
       </div>
-      <div className="flex flex-wrap items-end justify-between gap-x-12 gap-y-6">
-        <div className="max-w-[720px]">
-          <h2 className="text-balance text-[clamp(30px,3.4vw,44px)] font-normal leading-[1.12] tracking-[-0.02em] text-ink">
-            {title}
-          </h2>
-          {intro && <p className="mt-4 max-w-[36rem] text-[18px] leading-[1.6] text-muted">{intro}</p>}
-        </div>
-        {action}
-      </div>
+      {action}
     </Reveal>
   );
 }
@@ -70,22 +59,24 @@ const faqs = [
   },
 ];
 
-export function FaqSection({ index }: { index?: number }) {
+export function FaqSection() {
   return (
-    <section id="faq" className="shell scroll-mt-20 pt-32">
-      <SectionHeading index={index} kicker="Questions" title="Frequently asked questions" />
-      <div className={`${SECTION_GRID} mt-12`}>
-        <div aria-hidden="true" className="hidden lg:block" />
-        <Reveal className="border-t border-line" delay={0.05}>
+    <section id="faq" className="scroll-mt-28 py-24 lg:py-32">
+      <div className="shell grid items-start gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
+        <SectionHeading kicker="Questions" title="Frequently asked questions" />
+        <Reveal className="border-t-2 border-ink" delay={0.05}>
           {faqs.map((f, i) => (
-            <details key={f.q} className="group border-b border-line" open={i === 0}>
-              <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-6 py-5 text-[18px] font-medium text-ink [&::-webkit-details-marker]:hidden">
+            <details key={f.q} className="group border-b border-line-strong" open={i === 0}>
+              <summary className="flex min-h-[72px] cursor-pointer list-none items-center justify-between gap-6 py-5 text-[20px] font-semibold tracking-[-0.01em] [&::-webkit-details-marker]:hidden">
                 {f.q}
-                <span aria-hidden="true" className="meta shrink-0 text-subtle transition-transform duration-150 group-open:rotate-45">
-                  +
+                <span
+                  aria-hidden="true"
+                  className="flex size-9 shrink-0 items-center justify-center bg-ink text-[22px] font-normal text-white group-open:bg-signal group-open:text-ink"
+                >
+                  <span className="block transition-transform duration-150 group-open:rotate-45">+</span>
                 </span>
               </summary>
-              <p className="max-w-[44rem] pb-6 text-[16px] leading-[1.65] text-muted">{f.a}</p>
+              <p className="max-w-[44rem] pb-7 text-[17px] leading-[1.65] text-muted">{f.a}</p>
             </details>
           ))}
         </Reveal>
@@ -94,72 +85,46 @@ export function FaqSection({ index }: { index?: number }) {
   );
 }
 
-export function ContactSection({
-  heading = "Let's build something great together",
-  index,
-}: {
-  heading?: string;
-  index?: number;
-}) {
+export function ContactSection({ heading = "Let's build something great together" }: { heading?: string }) {
+  const rows = [
+    site.email && { k: "Email", v: site.email, href: `mailto:${site.email}` },
+    site.phone && { k: "Phone", v: site.phone, href: `tel:${site.phone.replace(/\s/g, "")}` },
+    site.whatsapp && { k: "WhatsApp", v: "Chat on WhatsApp", href: `https://wa.me/${site.whatsapp}`, external: true },
+  ].filter(Boolean) as { k: string; v: string; href: string; external?: boolean }[];
+
   return (
-    <section id="contact" className="shell scroll-mt-20 py-32">
-      <Reveal className="rounded-[8px] border border-line bg-bg-raised">
-        <div className="grid gap-12 p-6 sm:p-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:p-16">
-          <div className="min-w-0">
-            {index !== undefined ? (
-              <SpecMark index={index} total={SHEETS}>
-                Start here
-              </SpecMark>
-            ) : (
-              <p className="text-[14px] text-subtle">Start here</p>
-            )}
-            <h2 className="mt-6 text-balance text-[clamp(30px,3.4vw,44px)] font-normal leading-[1.12] tracking-[-0.02em]">
-              {heading}
-            </h2>
-            <p className="mt-5 max-w-[30rem] text-[18px] leading-[1.6] text-muted">
-              Tell us about your idea. We reply within one business day with next steps.
-            </p>
-            <dl className="mt-10 border-t border-line text-[16px]">
-              {site.email && (
-                <div className="flex items-baseline justify-between gap-4 border-b border-line py-3">
-                  <dt className="meta text-subtle">Email</dt>
-                  <dd>
-                    <a href={`mailto:${site.email}`} className="text-ink underline-offset-4 hover:underline">
-                      {site.email}
-                    </a>
-                  </dd>
-                </div>
-              )}
-              {site.phone && (
-                <div className="flex items-baseline justify-between gap-4 border-b border-line py-3">
-                  <dt className="meta text-subtle">Phone</dt>
-                  <dd>
-                    <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="tabular-nums text-ink underline-offset-4 hover:underline">
-                      {site.phone}
-                    </a>
-                  </dd>
-                </div>
-              )}
-              {site.whatsapp && (
-                <div className="flex items-baseline justify-between gap-4 border-b border-line py-3">
-                  <dt className="meta text-subtle">WhatsApp</dt>
-                  <dd>
-                    <a
-                      href={`https://wa.me/${site.whatsapp}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-ink underline-offset-4 hover:underline"
-                    >
-                      Chat on WhatsApp
-                    </a>
-                  </dd>
-                </div>
-              )}
-            </dl>
+    <section id="contact" className="on-night scroll-mt-28">
+      <div className="shell grid gap-14 py-24 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-20 lg:py-32">
+        <Reveal className="min-w-0">
+          <div className="flex items-center gap-4">
+            <span className="dash" aria-hidden="true" />
+            <p className="eyebrow text-on-night-muted">Start here</p>
           </div>
+          <h2 className="headline mt-6 text-balance">{heading}</h2>
+          <p className="lede mt-6 max-w-[30rem] text-on-night-muted">
+            Tell us about your idea. We reply within one business day with next steps.
+          </p>
+          <dl className="mt-12 border-t border-night-line">
+            {rows.map((r) => (
+              <div key={r.k} className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-night-line py-4">
+                <dt className="eyebrow text-on-night-muted">{r.k}</dt>
+                <dd>
+                  <a
+                    href={r.href}
+                    {...(r.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                    className="text-[17px] font-medium text-white underline-offset-4 hover:underline"
+                  >
+                    {r.v}
+                  </a>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </Reveal>
+        <Reveal delay={0.06} className="min-w-0 bg-paper p-6 text-ink sm:p-10">
           <ContactForm />
-        </div>
-      </Reveal>
+        </Reveal>
+      </div>
     </section>
   );
 }

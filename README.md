@@ -33,7 +33,6 @@ top of the list and change the details:
   images: ["/projects/my-new-app/1.png", "/projects/my-new-app/2.png"],
   tech: ["Flutter", "Firebase"],
   featured: true,                     // also show it on the homepage
-  tone: "blue",                       // card colour: blue | green | gray | peach
 },
 ```
 
@@ -44,10 +43,12 @@ and filters, and gets its own page at `/work/<slug>`.
 
 Put screenshots in `public/projects/<slug>/` and list them in `images`. The first image is the cover.
 
-- **Mobile apps:** use portrait phone screenshots (e.g. 1080×2340). Without images, a clean phone
-  preview with the app's initials is shown.
-- **Websites:** use a desktop screenshot (e.g. 1440×900). Without images, a live screenshot of the
-  website is loaded automatically, with a clean drawn preview as a fallback.
+- **Websites:** use a desktop screenshot, 1440×900, saved as `public/projects/<slug>/site.jpg`. It fills
+  the card and the project page edge to edge, cropped from the top.
+- **Mobile apps:** portrait phone screenshots (e.g. 1080×2340) are shown whole on a colour block.
+- **No pictures yet:** the card and the project page show a geometric colour block in the colour of the
+  project's type (orange for mobile apps, petrol for web platforms, black for websites). Nothing is
+  loaded from outside the site.
 
 ## Company details
 

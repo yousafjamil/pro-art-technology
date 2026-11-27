@@ -1,112 +1,92 @@
 @import "tailwindcss";
-@import "@fontsource-variable/ibm-plex-sans";
-@import "@fontsource/ibm-plex-mono/400.css";
-@import "@fontsource/ibm-plex-mono/500.css";
+@import "@fontsource-variable/schibsted-grotesk";
 
 /*
   ProArt Technology — design tokens
   ---------------------------------
-  Direction: engineering documentation. Spec sheets and structural drawings:
-  hairline rules, a faint drawing grid, monospace annotations. Precise and
-  unglamorous; nothing glows, nothing is a gradient.
+  Direction: enterprise consulting. Large, heavy editorial headlines; square
+  corners; the page is built from full-width colour blocks (white, stone,
+  black and the two brand colours) instead of one uniform surface. Imagery is
+  the real project screenshots, used large, or a solid geometric composition
+  in the brand colours where a project has none.
 
-  Surfaces, borders and text come from one neutral graphite ramp. Exactly one
-  accent, a deep safety orange, used only for the primary action, the focus
-  ring and the one annotation mark on the hero drawing. It never colours a
-  surface, a border or a section label.
+  One fixed scheme, no dark mode: the look depends on the contrast between
+  the blocks (a black band after a white one after an orange one). A dark
+  variant would turn the white blocks black and the rhythm would disappear.
 
-  Dark (graphite and steel) is the default; html[data-theme="light"] swaps to
-  the same ramp printed on paper. Both are set from these variables only.
+  Colours
+    ink     #0b0b0c  text on light blocks; the black blocks
+    paper   #ffffff  the default page
+    stone   #f1efea  cards and quiet blocks
+    signal  #ff5b14  ProArt orange: the brand block, primary buttons, marks
+    petrol  #063f48  the second brand block
 
-  Contrast (WCAG, on --color-bg):
-    dark  — ink 15.1:1, muted 7.5:1, subtle 5.1:1, accent as text 5.4:1,
-            text on the accent button 5.4:1
-    light — ink 14.6:1, muted 6.2:1, subtle 4.8:1, accent as text 4.9:1,
-            text on the accent button 5.4:1
+  Contrast (WCAG)
+    ink on paper 19.6:1, ink on stone 17:1, muted on paper 8.0:1
+    ink on signal 6.8:1  (text on orange is always ink, never white)
+    signal on ink 6.8:1  (orange as text only on black)
+    white on petrol 11.6:1
+    on paper, signal is a fill or a mark, never body text (3.0:1)
 */
 @theme {
-  --font-sans: "IBM Plex Sans Variable", "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-sans: "Schibsted Grotesk Variable", "Schibsted Grotesk", ui-sans-serif, system-ui, sans-serif;
 
-  /* Surfaces — graphite */
-  --color-bg: #141516;
-  --color-bg-raised: #1a1b1d;
-  --color-bg-raised-2: #222326;
-  --color-line: rgba(232, 233, 235, 0.09);
-  --color-line-strong: rgba(232, 233, 235, 0.16);
-  --color-grid: rgba(232, 233, 235, 0.045);
+  --color-ink: #0b0b0c;
+  --color-paper: #ffffff;
+  --color-stone: #f1efea;
+  --color-stone-2: #e4e1da;
+  --color-muted: #4f5156;
+  --color-subtle: #66686d;
+  --color-line: rgba(11, 11, 12, 0.12);
+  --color-line-strong: rgba(11, 11, 12, 0.28);
 
-  /* Text — three roles */
-  --color-ink: #e8e9eb;
-  --color-muted: #a3a6ab;
-  --color-subtle: #84878d;
+  /* On black blocks */
+  --color-night: #0b0b0c;
+  --color-night-2: #19191b;
+  --color-night-3: #2a2a2d;
+  --color-on-night-muted: #b4b5b9;
+  --color-night-line: rgba(255, 255, 255, 0.18);
 
-  /* The one accent — safety orange */
-  --color-accent: #e8622c;
-  --color-accent-ink: #141516;
-  --color-accent-hover: #f07a48;
-}
-
-html[data-theme="light"] {
-  /* Surfaces — paper */
-  --color-bg: #eeedea;
-  --color-bg-raised: #f7f7f5;
-  --color-bg-raised-2: #e4e3df;
-  --color-line: rgba(27, 28, 30, 0.1);
-  --color-line-strong: rgba(27, 28, 30, 0.18);
-  --color-grid: rgba(27, 28, 30, 0.05);
-
-  /* Text — graphite on paper */
-  --color-ink: #1b1c1e;
-  --color-muted: #55575b;
-  --color-subtle: #66686c;
-
-  /* The same orange, one step deeper so it reads as ink on paper */
-  --color-accent: #b83a0e;
-  --color-accent-ink: #f7f7f5;
-  --color-accent-hover: #9c300b;
+  /* Brand */
+  --color-signal: #ff5b14;
+  --color-signal-hover: #ff7a3f;
+  --color-petrol: #063f48;
+  --color-petrol-2: #0b5864;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
-    background: var(--color-bg);
+    background: var(--color-paper);
   }
 
   body {
     @apply font-sans antialiased;
-    background: var(--color-bg);
+    background: var(--color-paper);
     color: var(--color-ink);
-    font-size: 16px;
+    font-size: 17px;
     line-height: 1.55;
   }
 
-  /* The toggle switches the variables instantly; this fades the colours
-     between the two themes instead of snapping. Colours only. */
-  *, *::before, *::after {
-    transition: background-color 0.18s cubic-bezier(0.22, 1, 0.36, 1),
-      border-color 0.18s cubic-bezier(0.22, 1, 0.36, 1), color 0.18s cubic-bezier(0.22, 1, 0.36, 1),
-      fill 0.18s cubic-bezier(0.22, 1, 0.36, 1), stroke 0.18s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
   h1, h2, h3, h4 {
-    font-weight: 500;
+    font-weight: 600;
   }
 
   ::selection {
-    background: var(--color-accent);
-    color: var(--color-accent-ink);
+    background: var(--color-signal);
+    color: var(--color-ink);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 2px;
+    outline: 2px solid var(--color-signal);
+    outline-offset: 3px;
   }
 }
 
 @layer components {
-  /* Page shell: the same width and gutters for the header, every section and
-     the footer, so the edges line up down the whole page. */
+  /* Page shell: the same width and gutters for every block, so the edges
+     line up down the whole page. Blocks are full-bleed; their content sits
+     in a .shell. */
   .shell {
     margin-inline: auto;
     width: 100%;
@@ -115,82 +95,147 @@ html[data-theme="light"] {
   }
   @media (min-width: 640px) {
     .shell {
-      padding-inline: 32px;
+      padding-inline: 40px;
     }
   }
   @media (min-width: 1024px) {
     .shell {
-      padding-inline: 48px;
+      padding-inline: 64px;
     }
   }
 
-  /* Buttons — 4px corners, 44px tall, sentence case */
+  /* Type scale */
+  .display {
+    font-size: clamp(44px, 7.2vw, 108px);
+    font-weight: 700;
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+  }
+  .headline {
+    font-size: clamp(36px, 4.6vw, 68px);
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+  }
+  .title {
+    font-size: clamp(24px, 2.4vw, 34px);
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+  }
+  .lede {
+    font-size: clamp(18px, 1.5vw, 21px);
+    line-height: 1.5;
+  }
+  /* Small uppercase label above a title: card eyebrows, section names */
+  .eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 16px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  /* The short orange rule that opens a section */
+  .dash {
+    display: block;
+    width: 40px;
+    height: 4px;
+    background: var(--color-signal);
+  }
+
+  /* Buttons — square, 52px tall */
   .btn {
+    display: inline-flex;
+    min-height: 52px;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border: 2px solid transparent;
+    padding-inline: 24px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+    transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .btn-primary {
+    background: var(--color-signal);
+    color: var(--color-ink);
+  }
+  .btn-primary:hover {
+    background: var(--color-signal-hover);
+  }
+  .btn-dark {
+    background: var(--color-ink);
+    color: #fff;
+  }
+  .btn-dark:hover {
+    background: var(--color-night-3);
+  }
+  .btn-outline {
+    border-color: currentColor;
+  }
+  .btn-outline:hover {
+    background: var(--color-ink);
+    border-color: var(--color-ink);
+    color: #fff;
+  }
+  .on-night .btn-outline:hover,
+  .on-petrol .btn-outline:hover {
+    background: #fff;
+    border-color: #fff;
+    color: var(--color-ink);
+  }
+  .btn-sm {
+    min-height: 44px;
+    padding-inline: 18px;
+    font-size: 15px;
+  }
+
+  /* Text link with an arrow, like "Explore →" */
+  .arrow-link {
     display: inline-flex;
     min-height: 44px;
     align-items: center;
-    justify-content: center;
-    gap: 8px;
-    border-radius: 4px;
-    border: 1px solid transparent;
-    padding-inline: 20px;
-    font-size: 15px;
-    font-weight: 500;
-    line-height: 1;
-    white-space: nowrap;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 600;
   }
-  .btn-primary {
-    background: var(--color-accent);
-    color: var(--color-accent-ink);
+  .arrow {
+    display: inline-block;
+    transition: transform 0.15s;
   }
-  .btn-primary:hover {
-    background: var(--color-accent-hover);
+  .arrow-link:hover .arrow,
+  .group:hover .arrow {
+    transform: translateX(4px);
   }
-  .btn-solid {
-    background: var(--color-ink);
-    color: var(--color-bg);
+
+  /* Colour blocks. Text colours follow the block. */
+  .on-night {
+    background: var(--color-night);
+    color: #fff;
   }
-  .btn-solid:hover {
-    background: var(--color-muted);
-  }
-  .btn-line {
-    border-color: var(--color-line-strong);
+  .on-signal {
+    background: var(--color-signal);
     color: var(--color-ink);
   }
-  .btn-line:hover {
-    background: var(--color-bg-raised-2);
+  .on-petrol {
+    background: var(--color-petrol);
+    color: #fff;
   }
-  .btn-sm {
-    min-height: 36px;
-    padding-inline: 16px;
-    font-size: 14px;
+  .on-stone {
+    background: var(--color-stone);
+    color: var(--color-ink);
   }
 }
 
 @layer utilities {
-  /* Monospace meta: figures, indices, small technical labels */
-  .meta {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    line-height: 16px;
-    letter-spacing: 0.01em;
-    font-variant-numeric: tabular-nums;
-  }
-
   .text-balance {
     text-wrap: balance;
   }
-
-  /* Drawing grid in the neutral ramp. Used only on drawing surfaces: the
-     hero sheet and the project plates. */
-  .grid-field {
-    background-image:
-      linear-gradient(to right, var(--color-grid) 1px, transparent 1px),
-      linear-gradient(to bottom, var(--color-grid) 1px, transparent 1px);
-    background-size: 40px 40px;
-    background-position: -1px -1px;
+  .text-pretty {
+    text-wrap: pretty;
   }
-
   .no-scrollbar {
     scrollbar-width: none;
   }

@@ -9,8 +9,8 @@
 //      images: ["/projects/quick-swapper/1.png", "/projects/quick-swapper/2.png"],
 //  Website screenshots are  public/projects/<slug>/site.jpg  (1440 x 900).
 //  The first image is used as the cover. Without images, the card and
-//  the project page show the project's technical drawing, set up in
-//  src/data/drawings.ts (a new project without one gets a plain drawing).
+//  the project page show a geometric colour block in the colour of the
+//  project's type (see projectTone below).
 // ─────────────────────────────────────────────────────────────
 
 export type ProjectCategory = "Mobile App" | "Web Platform" | "Website" | "Software";
@@ -228,20 +228,27 @@ export const linkLabels: Record<ProjectLinkKind, string> = {
   website: "Visit website",
 };
 
-// Live screenshot of a website, used when a project has no images yet.
-export function websiteShot(url: string) {
-  return `https://s.wordpress.com/mshots/v1/${encodeURIComponent(url)}?w=1280&h=800`;
-}
-
-export function coverImage(project: Project) {
-  if (project.images?.length) return project.images[0];
-  const site = project.links.find((l) => l.kind === "website");
-  return site ? websiteShot(site.url) : undefined;
-}
-
-// Sheet number of a project in the full list ("03 / 16"), used by the card's
-// spec mark so the same project keeps the same number on every page.
-export function projectNumber(project: Project) {
+// Which composition a project's colour block uses: its position among the
+// projects without screenshots drawn in the same colour, so no two of them
+// look the same.
+export function projectArtVariant(project: Project) {
+  const tone = projectTone(project);
+  const same = projects.filter((p) => projectTone(p) === tone && !p.images?.length);
   // By slug, not by object: client components receive serialized copies.
-  return projects.findIndex((p) => p.slug === project.slug) + 1;
+  return Math.max(0, same.findIndex((p) => p.slug === project.slug));
+}
+
+// The colour block a project without screenshots is drawn in, by type, so a
+// grid of cards keeps a steady rhythm of colours.
+export function projectTone(project: Project): "signal" | "petrol" | "night" | "stone" {
+  switch (project.category) {
+    case "Mobile App":
+      return "signal";
+    case "Web Platform":
+      return "petrol";
+    case "Website":
+      return "night";
+    default:
+      return "stone";
+  }
 }

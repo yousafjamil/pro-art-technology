@@ -28,8 +28,8 @@ export function ContactForm() {
   }
 
   const field =
-    "min-h-11 rounded-[4px] border border-line-strong bg-bg px-3 py-2.5 text-base text-ink placeholder:text-subtle focus:border-muted focus:outline-none focus-visible:outline-2 focus-visible:outline-accent";
-  const label = "flex flex-col gap-2 text-[14px] text-muted";
+    "min-h-12 border-0 border-b-2 border-ink/40 bg-stone px-3 py-3 text-base text-ink placeholder:text-subtle focus:border-signal focus:outline-none focus-visible:outline-2 focus-visible:outline-signal";
+  const label = "flex flex-col gap-2 text-[14px] font-semibold text-ink";
 
   return (
     <form onSubmit={onSubmit} className="grid min-w-0 content-start gap-5 text-ink sm:grid-cols-2">
@@ -59,7 +59,7 @@ export function ContactForm() {
       </label>
       <div className="flex flex-wrap items-center gap-4 sm:col-span-2">
         <button type="submit" className="btn btn-primary">
-          Send message
+          Send message <span aria-hidden="true">→</span>
         </button>
         {sent && <span className="text-[14px] text-muted">Your email app should open with the message ready to send.</span>}
       </div>
