@@ -165,8 +165,19 @@ export function SiteHeader() {
     };
   }, [panel, mobileOpen]);
 
+  // The page behind the full-height mobile menu must not scroll with it.
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const root = document.documentElement;
+    const prev = root.style.overflow;
+    root.style.overflow = "hidden";
+    return () => {
+      root.style.overflow = prev;
+    };
+  }, [mobileOpen]);
+
   const toggle = (p: Exclude<Panel, null>) => setPanel((cur) => (cur === p ? null : p));
-  const topLink = "flex h-full items-center gap-2 border-b-2 px-3 text-[15px] font-medium transition-colors";
+  const topLink = "flex h-full items-center gap-2 whitespace-nowrap border-b-2 px-2.5 text-[15px] font-medium transition-colors xl:px-3";
   const state = (active: boolean) => (active ? "border-signal text-white" : "border-transparent text-white/80 hover:text-white");
 
   return (
@@ -176,12 +187,12 @@ export function SiteHeader() {
         <div className="shell flex h-9 items-center justify-end gap-6 text-[13px] text-on-night-muted">
           {site.address && <span>{site.address}</span>}
           {site.email && (
-            <a href={`mailto:${site.email}`} className="hover:text-white">
+            <a href={`mailto:${site.email}`} className="flex h-full items-center hover:text-white">
               {site.email}
             </a>
           )}
           {site.phone && (
-            <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="tabular-nums hover:text-white">
+            <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="flex h-full items-center tabular-nums hover:text-white">
               {site.phone}
             </a>
           )}
@@ -226,7 +237,8 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <Link href="/contact" className="btn btn-primary btn-sm hidden sm:inline-flex">
+          {/* Between 1024 and 1279 the five nav links need this room; Contact is in the nav. */}
+          <Link href="/contact" className="btn btn-primary btn-sm hidden sm:inline-flex lg:hidden xl:inline-flex">
             Start a project
           </Link>
           <button
@@ -263,7 +275,7 @@ export function SiteHeader() {
         <nav
           id="mobile-menu"
           aria-label="Mobile"
-          className="absolute inset-x-0 top-full h-[calc(100dvh-72px)] overflow-y-auto border-t border-night-line bg-night lg:hidden"
+          className="absolute inset-x-0 top-full h-[calc(100dvh-72px)] overflow-y-auto overscroll-contain border-t border-night-line bg-night md:h-[calc(100dvh-108px)] lg:hidden"
         >
           <div className="shell pb-10 pt-4">
             <ul>
@@ -295,10 +307,14 @@ export function SiteHeader() {
             <Link href="/contact" onClick={close} className="btn btn-primary mt-10 w-full">
               Start a project
             </Link>
-            <div className="mt-8 flex flex-col gap-2 text-[15px] text-on-night-muted">
-              {site.email && <a href={`mailto:${site.email}`}>{site.email}</a>}
+            <div className="mt-6 flex flex-col text-[15px] text-on-night-muted">
+              {site.email && (
+                <a href={`mailto:${site.email}`} className="flex min-h-11 items-center">
+                  {site.email}
+                </a>
+              )}
               {site.phone && (
-                <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="tabular-nums">
+                <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="flex min-h-11 items-center tabular-nums">
                   {site.phone}
                 </a>
               )}

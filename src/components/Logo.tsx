@@ -9,7 +9,7 @@ export function Logo({ onClick }: { onClick?: () => void }) {
       <span className="flex size-9 shrink-0 items-center justify-center bg-signal text-[15px] font-bold tracking-[-0.04em] text-ink">
         PA
       </span>
-      <span className="text-[20px] font-bold leading-none tracking-[-0.03em]">
+      <span className="text-[20px] font-bold leading-none tracking-[-0.03em] sm:whitespace-nowrap">
         {site.shortName}
         <span className="font-normal"> Technology</span>
       </span>
