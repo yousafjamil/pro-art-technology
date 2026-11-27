@@ -10,7 +10,7 @@ const socialLabels: Record<keyof typeof site.social, string> = {
   github: "GitHub",
 };
 
-const linkClass = "flex min-h-9 items-center text-[15px] text-white/80 transition-colors hover:text-white";
+const linkClass = "flex min-h-11 items-center lg:min-h-9 text-[15px] text-white/80 transition-colors hover:text-white";
 const head = "eyebrow mb-3 text-on-night-muted";
 
 export function SiteFooter() {
@@ -57,7 +57,7 @@ export function SiteFooter() {
                 WhatsApp
               </a>
             )}
-            {site.address && <span className="flex min-h-9 items-center text-[15px] text-white/80">{site.address}</span>}
+            {site.address && <span className="flex min-h-11 items-center text-[15px] text-white/80 lg:min-h-9">{site.address}</span>}
             {socials.map((k) => (
               <a key={k} href={site.social[k]} target="_blank" rel="noopener noreferrer" className={linkClass}>
                 {socialLabels[k]}
@@ -66,11 +66,15 @@ export function SiteFooter() {
           </div>
         </div>
       </div>
-      <div className="shell flex flex-wrap items-center justify-between gap-3 border-t border-night-line py-6 text-[14px] text-on-night-muted">
-        <span>
-          © {new Date().getFullYear()} {site.name}. All rights reserved.
-        </span>
-        <span>Built in Abu Dhabi</span>
+      {/* The rule sits inside the shell's padding, so it lines up with the
+          columns above at every width instead of running into the gutter. */}
+      <div className="shell">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-night-line py-6 text-[14px] text-on-night-muted">
+          <span>
+            © {new Date().getFullYear()} {site.name}. All rights reserved.
+          </span>
+          <span>Built in Abu Dhabi</span>
+        </div>
       </div>
     </footer>
   );

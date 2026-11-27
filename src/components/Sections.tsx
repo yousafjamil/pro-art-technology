@@ -106,13 +106,13 @@ export function ContactSection({ heading = "Let's build something great together
           </p>
           <dl className="mt-12 border-t border-night-line">
             {rows.map((r) => (
-              <div key={r.k} className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-night-line py-4">
+              <div key={r.k} className="flex flex-wrap items-center justify-between gap-x-4 border-b border-night-line py-1.5">
                 <dt className="eyebrow text-on-night-muted">{r.k}</dt>
                 <dd>
                   <a
                     href={r.href}
                     {...(r.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                    className="text-[17px] font-medium text-white underline-offset-4 hover:underline"
+                    className="inline-flex min-h-11 items-center text-[17px] font-medium text-white underline-offset-4 hover:underline"
                   >
                     {r.v}
                   </a>
