@@ -51,7 +51,7 @@ export default function HomePage() {
     <>
       {/* Hero */}
       <section className="on-night relative overflow-hidden">
-        <div className="shell grid items-center gap-14 pb-20 pt-14 sm:pt-20 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-12 lg:pb-28 lg:pt-24">
+        <div className="shell grid items-center gap-14 pb-20 pt-14 sm:pt-20 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-12 xl:gap-20 lg:pb-28 lg:pt-24">
           <Reveal className="min-w-0">
             <div className="flex items-center gap-4">
               <span className="dash" aria-hidden="true" />
@@ -72,14 +72,18 @@ export default function HomePage() {
             </div>
           </Reveal>
 
-          {/* Composition: an orange block with a real project screenshot laid over it */}
-          <Reveal delay={0.1} className="relative min-w-0">
-            <div className="relative ml-auto aspect-[5/6] w-[78%] max-w-[460px]">
+          {/* Composition: an orange block with a real project screenshot laid
+              over its lower left. Both sit in one grid cell (no absolute
+              positioning), so the cell is always as tall as the taller of the
+              two: the screenshot can never be pushed up over the headline,
+              whatever the width, the text size or the image's load state. */}
+          <Reveal delay={0.1} className="grid min-w-0">
+            <div className="relative col-start-1 row-start-1 mb-12 ml-auto aspect-[5/6] w-[78%] max-w-[460px] self-start justify-self-end sm:mb-16">
               <HeroArt />
             </div>
             <Link
               href={`/work/${heroProject.slug}`}
-              className="group absolute bottom-[-8%] left-0 w-[86%] max-w-[500px] bg-night-2 shadow-[0_30px_60px_rgba(0,0,0,0.5)]"
+              className="group relative col-start-1 row-start-1 mt-16 w-[86%] max-w-[500px] self-end justify-self-start bg-night-2 shadow-[0_30px_60px_rgba(0,0,0,0.5)]"
             >
               <span className="relative block aspect-[16/10] overflow-hidden">
                 <ProjectVisual project={heroProject} eager className="transition-transform duration-500 group-hover:scale-[1.03]" />
@@ -262,7 +266,7 @@ export default function HomePage() {
       <section id="models" className="scroll-mt-28 py-24 lg:py-32">
         <div className="shell">
           <SectionHeading kicker="Pricing models" title="Work with us your way" />
-          <RevealGroup className="mt-14 grid gap-6 md:grid-cols-3">
+          <RevealGroup className="mt-14 grid gap-6 lg:grid-cols-3">
             {models.map((m) => (
               <RevealItem
                 key={m.title}

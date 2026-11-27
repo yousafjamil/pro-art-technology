@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { projectArtVariant, projectTone, type Project } from "@/data/projects";
-import { GeoArt } from "./GeoArt";
+import { projectArt, type Project } from "@/data/projects";
+import { ProjectArt } from "./GeoArt";
 
 // An <img> that reports failure even if it failed before the page became interactive.
 function SafeImg({ onFail, ...props }: React.ImgHTMLAttributes<HTMLImageElement> & { onFail: () => void }) {
@@ -17,8 +17,8 @@ function SafeImg({ onFail, ...props }: React.ImgHTMLAttributes<HTMLImageElement>
 
 // A project's picture, filling its box edge to edge: the first screenshot in
 // public/projects/<slug>/ cropped from the top, or, without one (or if it
-// fails to load), the project's colour block. Phone screens are shown whole
-// on the colour block instead of cropped.
+// fails to load), the project's own geometric composition (`art`). Phone
+// screens are shown whole on that composition instead of cropped.
 export function ProjectVisual({
   project,
   eager = false,
@@ -32,17 +32,16 @@ export function ProjectVisual({
   const fail = useRef(() => setFailed(true)).current;
   const src = project.images?.[0];
   const frame = project.imageFrame ?? (project.category === "Mobile App" ? "phone" : "browser");
-  const tone = projectTone(project);
-  const variant = projectArtVariant(project);
+  const art = projectArt(project);
 
   if (!src || failed) {
-    return <GeoArt seed={project.slug} tone={tone} variant={variant} className={className} />;
+    return <ProjectArt spec={art} className={className} />;
   }
 
   if (frame === "phone") {
     return (
       <div className={`relative size-full ${className}`}>
-        <GeoArt seed={project.slug} tone={tone} variant={variant} />
+        <ProjectArt spec={art} />
         <SafeImg
           src={src}
           alt={`${project.name} app screen`}

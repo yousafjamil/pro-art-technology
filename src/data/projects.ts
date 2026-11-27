@@ -9,9 +9,12 @@
 //      images: ["/projects/quick-swapper/1.png", "/projects/quick-swapper/2.png"],
 //  Website screenshots are  public/projects/<slug>/site.jpg  (1440 x 900).
 //  The first image is used as the cover. Without images, the card and
-//  the project page show a geometric colour block in the colour of the
-//  project's type (see projectTone below).
+//  the project page show a geometric composition described by `art`
+//  (the kinds are in src/components/GeoArt.tsx). Give each project
+//  without images its own kind and colours, so no two cards look alike.
 // ─────────────────────────────────────────────────────────────
+
+import type { ArtSpec } from "@/components/GeoArt";
 
 export type ProjectCategory = "Mobile App" | "Web Platform" | "Website" | "Software";
 
@@ -36,6 +39,8 @@ export type Project = {
   imageFrame?: "phone" | "browser";
   tech?: string[];
   featured?: boolean; // show on the homepage
+  // The composition drawn when there is no screenshot (or it fails to load).
+  art?: ArtSpec;
 };
 
 export const projects: Project[] = [
@@ -49,6 +54,19 @@ export const projects: Project[] = [
       "Yotto Health is a digital health platform that offers health monitoring services and helps users manage their health conditions in one place.",
     links: [{ kind: "website", url: "https://yotto.health/" }],
     featured: true,
+    // A field of readings with a heartbeat traced through it.
+    art: {
+      kind: "dots",
+      bg: "petrol",
+      dot: "petrol2",
+      cols: 12,
+      rows: 7,
+      size: 0.4,
+      hi: [36, 37, 38, 39, 28, 17, 66, 55, 44, 45, 46, 47],
+      hiColor: "signal",
+      hi2: [10, 11, 22, 23],
+      hi2Color: "stone",
+    },
   },
   {
     slug: "ride-chauffeur",
@@ -60,6 +78,8 @@ export const projects: Project[] = [
       "Ride Chauffeur makes it simple to book professional drivers and transport services online, with a smooth booking experience for every customer.",
     links: [{ kind: "website", url: "https://ridechauffeur.com/" }],
     featured: true,
+    // One diagonal cut, like a road crossing the frame.
+    art: { kind: "diagonal", bg: "stone", cut: "ink", band: "signal", mark: "ink" },
   },
   {
     slug: "apopou-cashback",
@@ -71,6 +91,16 @@ export const projects: Project[] = [
       "Apopou is a mobile app that gives users a cashback system and cash-back offers, rewarding them every time they shop.",
     links: [{ kind: "play-store", url: "https://play.google.com/store/apps/details?id=com.cashback.apopou" }],
     featured: true,
+    // A rising bar chart under a large cropped disc, like a coin.
+    art: {
+      kind: "bars",
+      bg: "signal",
+      bar: "ink",
+      accent: "stone",
+      heights: [0.22, 0.34, 0.28, 0.44, 0.38, 0.56],
+      accentIndex: 5,
+      coin: "signal2",
+    },
   },
   {
     slug: "lms-solutions",
@@ -105,6 +135,18 @@ export const projects: Project[] = [
     description:
       "BinOps Pharma is a specialised mobile app for managing pharmaceutical services and products.",
     links: [{ kind: "play-store", url: "https://play.google.com/store/apps/details?id=com.binops.pharma.pk" }],
+    // Stacked capsules, one of them two-coloured like a pill.
+    art: {
+      kind: "pills",
+      bg: "ink",
+      rows: [
+        { x: -20, w: 96, c: "petrol2" },
+        { x: 46, w: 128, c: "signal", c2: "stone" },
+        { x: -12, w: 70, c: "stone" },
+        { x: 72, w: 100, c: "petrol2" },
+        { x: 20, w: 92, c: "signal2" },
+      ],
+    },
   },
   {
     slug: "ward-guide-first-aid",
@@ -115,6 +157,15 @@ export const projects: Project[] = [
     description:
       "Ward Guide is a first-aid guide app that helps people take the right steps quickly in emergency situations.",
     links: [{ kind: "play-store", url: "https://play.google.com/store/apps/details?id=com.firstaid.wardguide" }],
+    // A mosaic of square tiles with quarter and half discs in all four colours.
+    art: {
+      kind: "mosaic",
+      tiles: [
+        ["signal", "ink", "q2"], ["stone", "signal", "h3"], ["ink", "stone", "q3"], ["petrol", "signal", "c"],
+        ["ink", "signal", "q1"], ["signal", "stone", "c"], ["stone", "ink", "h0"], ["signal", "ink", "q3"],
+        ["petrol", "stone", "q0"], ["ink", "signal", "h2"], ["signal", "ink", "q1"], ["stone", "petrol", "q2"],
+      ],
+    },
   },
   {
     slug: "quick-swapper",
@@ -138,6 +189,8 @@ export const projects: Project[] = [
     description:
       "Find My Phone is a smart app that helps users find their lost phone using advanced alert tools.",
     links: [{ kind: "play-store", url: "https://play.google.com/store/apps/details?id=com.restmind.findmyphone" }],
+    // Concentric rings around one point, like a locator's ping.
+    art: { kind: "rings", bg: "stone", cx: 112, cy: 54, step: 13, colors: ["petrol", "stone", "petrol", "stone", "petrol", "signal"], mark: "ink" },
   },
   {
     slug: "itec-experts",
@@ -228,27 +281,23 @@ export const linkLabels: Record<ProjectLinkKind, string> = {
   website: "Visit website",
 };
 
-// Which composition a project's colour block uses: its position among the
-// projects without screenshots drawn in the same colour, so no two of them
-// look the same.
-export function projectArtVariant(project: Project) {
-  const tone = projectTone(project);
-  const same = projects.filter((p) => projectTone(p) === tone && !p.images?.length);
-  // By slug, not by object: client components receive serialized copies.
-  return Math.max(0, same.findIndex((p) => p.slug === project.slug));
+// Used when a project with screenshots has no `art` and its image fails to
+// load (or behind a phone screenshot): one of these, chosen by the slug.
+const fallbackArt: ArtSpec[] = [
+  { kind: "arches", bg: "petrol", cx: 80, step: 17, colors: ["signal", "stone", "ink", "signal2"] },
+  { kind: "dots", bg: "ink", dot: "night3", cols: 10, rows: 6, size: 0.55, square: true, hi: [12, 13, 22, 23, 34, 35, 44, 45], hiColor: "signal" },
+  { kind: "arches", bg: "stone", cx: 136, step: 20, colors: ["ink", "signal", "stone", "petrol"] },
+];
+
+function slugHash(s: string) {
+  let h = 2166136261;
+  for (let i = 0; i < s.length; i++) {
+    h ^= s.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
 }
 
-// The colour block a project without screenshots is drawn in, by type, so a
-// grid of cards keeps a steady rhythm of colours.
-export function projectTone(project: Project): "signal" | "petrol" | "night" | "stone" {
-  switch (project.category) {
-    case "Mobile App":
-      return "signal";
-    case "Web Platform":
-      return "petrol";
-    case "Website":
-      return "night";
-    default:
-      return "stone";
-  }
+export function projectArt(project: Project): ArtSpec {
+  return project.art ?? fallbackArt[slugHash(project.slug) % fallbackArt.length];
 }
