@@ -23,8 +23,9 @@
 
   Contrast (WCAG)
     ink on paper 19.6:1, ink on stone 17:1, muted on paper 8.0:1
-    ink on signal 6.8:1  (text on orange is always ink, never white)
-    signal on ink 6.8:1  (orange as text only on black)
+    ink on signal 6.3:1  (text on orange is always ink, never white: 3.1:1)
+    signal on ink 6.3:1  (orange as text only on black)
+    signal on petrol 3.7:1 (large numerals only)
     white on petrol 11.6:1
     on paper, signal is a fill or a mark, never body text (3.0:1)
 */
@@ -51,7 +52,6 @@
   --color-signal: #ff5b14;
   --color-signal-hover: #ff7a3f;
   --color-petrol: #063f48;
-  --color-petrol-2: #0b5864;
 }
 
 @layer base {
@@ -80,6 +80,10 @@
   :focus-visible {
     outline: 2px solid var(--color-signal);
     outline-offset: 3px;
+  }
+  /* An orange ring disappears on the orange blocks: ink there instead. */
+  .on-signal :focus-visible {
+    outline-color: var(--color-ink);
   }
 }
 
@@ -232,9 +236,6 @@
 @layer utilities {
   .text-balance {
     text-wrap: balance;
-  }
-  .text-pretty {
-    text-wrap: pretty;
   }
   .no-scrollbar {
     scrollbar-width: none;

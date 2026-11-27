@@ -303,23 +303,10 @@ export function HeroArt() {
   );
 }
 
-export function GeoArt({
-  seed,
-  tone,
-  variant,
-  className = "",
-  label,
-}: {
-  seed: string;
-  tone: GeoTone;
-  // Picks the composition directly (0-7; 4-7 are 0-3 mirrored). Without it,
-  // the seed picks one.
-  variant?: number;
-  className?: string;
-  label?: string;
-}) {
+export function GeoArt({ seed, tone, className = "" }: { seed: string; tone: GeoTone; className?: string }) {
   const t = TONES[tone];
-  const v = (variant ?? hash(seed)) % 8;
+  // The seed picks one of eight compositions (4-7 are 0-3 mirrored).
+  const v = hash(seed) % 8;
   const n = v % 4;
   const mirrored = v >= 4;
   return (
@@ -327,9 +314,7 @@ export function GeoArt({
       viewBox="0 0 160 100"
       preserveAspectRatio="xMidYMid slice"
       className={`block size-full ${className}`}
-      role={label ? "img" : undefined}
-      aria-label={label}
-      aria-hidden={label ? undefined : true}
+      aria-hidden="true"
     >
       <rect width="160" height="100" fill={t.bg} />
       <g transform={mirrored ? "translate(160 0) scale(-1 1)" : undefined}>
