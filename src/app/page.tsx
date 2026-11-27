@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Counter } from "@/components/motion/Counter";
 import { Reveal, RevealGroup, RevealItem } from "@/components/motion/Reveal";
 import { HeroArt } from "@/components/GeoArt";
+import { HeroCanvas } from "@/components/HeroCanvas";
 import { ProjectCard } from "@/components/ProjectCard";
 import { ProjectVisual } from "@/components/ProjectVisual";
 import { ContactSection, FaqSection, SectionHeading } from "@/components/Sections";
@@ -50,7 +51,18 @@ export default function HomePage() {
   return (
     <>
       {/* Hero */}
-      <section className="on-night relative overflow-hidden">
+      <section className="on-night relative isolate overflow-hidden">
+        {/* Animated system diagram behind everything, then a shade that keeps
+            the headline side darkest. Both are decoration only. */}
+        <HeroCanvas className="-z-10" />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(180deg,#0b0b0c_0%,rgba(11,11,12,0)_22%,rgba(11,11,12,0)_78%,rgba(11,11,12,0.6)_100%)]"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-10 hidden bg-[linear-gradient(90deg,rgba(11,11,12,0.7)_0%,rgba(11,11,12,0.45)_40%,rgba(11,11,12,0)_68%)] lg:block"
+        />
         <div className="shell grid items-center gap-14 pb-20 pt-14 sm:pt-20 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-12 xl:gap-20 lg:pb-28 lg:pt-24">
           <Reveal className="min-w-0">
             <div className="flex items-center gap-4">
