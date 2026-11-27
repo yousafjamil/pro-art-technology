@@ -68,7 +68,10 @@ export function PortfolioBrowser({ projects, industries }: { projects: Project[]
         />
       </Suspense>
 
-      <div className="sticky top-[72px] z-20 border-b border-line bg-paper md:top-[108px]">
+      {/* Sticky from a tablet up. On a phone the bar wraps to three rows
+          (about 200px) and, under the 72px header, would cover a third of
+          the screen while scrolling the grid. */}
+      <div className="z-20 border-b border-line bg-paper md:sticky md:top-[108px]">
         <div className="shell flex flex-wrap items-center gap-x-8 gap-y-4 py-5">
           <div role="group" aria-label="Filter by type" className="no-scrollbar -mx-1 flex max-w-full gap-1 overflow-x-auto px-1">
             {chips.map((c) => {
